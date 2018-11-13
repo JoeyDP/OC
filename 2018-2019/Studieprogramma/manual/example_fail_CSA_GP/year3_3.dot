@@ -1,0 +1,187 @@
+digraph Studieprogramma{
+	node [shape="rect", pin=true, style=filled,color=white, height=0.7, fixedsize=true];
+	graph [ranksep="6", nodesep="0.2" splines=true, concentrate=true];
+	edge [constraint=false];
+
+	/*
+	3 SP = 0.25
+	6 SP = 0.7
+	9 SP = 1.15
+	12 SP = 1.6
+	*/
+
+	rankdir="LR"
+
+	subgraph cluster_ba1{
+		label = "Ba 1"
+		style=filled;
+		color=lightgrey;
+
+		IP [height=1.15, color=green];
+		DW [height=1.15, color=green];
+		CSA [height=1.15, color=green];
+		GAS [color=green];
+
+		
+
+		ba1_sem [height=0, fixedsize=true, label="", color=black];
+
+		TA [label="T&A", color=green];
+		PSE [color=green];
+		CALC [height=1.15, color=green];
+		CG [color=green];
+
+		
+	}
+
+	subgraph cluster_ba2{
+		label = "Ba 2"
+		style=filled;
+		color=lightgrey;
+
+		GP [color=red];
+		MB [label="M&B", color=green];
+		US [color=green];
+		IDBS [color=green];
+		LA [color=green];
+
+		
+
+		ba2_sem [height=0, fixedsize=true, label="", color=black];
+
+		AC [label="A&C", color=green];
+		PPD [color=green];
+		CN [color=green];
+		FYS [color=green];
+		NA [height=0.25, color=green];
+		ES [height=0.25, color=green];
+
+		
+	}
+
+	subgraph cluster_ba3{
+		label = "Ba 3"
+		style=filled;
+		color=lightgrey;
+		fixedsize=true;
+		height=200;
+
+		WP [color=grey];
+		SE [color=green];
+		TCS [color=grey];
+		DS [color=grey];
+		AI [color=green];
+
+		
+
+		ba3_sem [height=0, fixedsize=true, label="", color=black];
+
+		DSGA [height=0.25, color=green];
+		COMP [color=green];
+		LBS [height=0.25, color=green];
+		BAE [height=1.6, color=grey];
+		KZVK [height=0.7, color=green]
+
+		
+	}
+
+	# align clusters by adding invis edge between top items.
+	{
+		edge	[constraint=true, style=invis];
+		IP:ne -> GP:nw;
+		GP:ne -> WP:nw;
+	}
+
+	# =====================
+	# =	dependencies 2Ba	=
+	# =====================
+
+	# GP
+ 	IP:e -> GP:w [color=green];
+	CSA:e -> GP:w [color=green];
+	PSE:e -> GP:w [color=green];
+	CG:e -> GP:w [color=green];
+
+	# M&B
+	TA:e -> MB:w [color=green];
+
+	# US
+	CSA:e -> US:w [color=green];
+
+	# IDBS
+	GAS:e -> IDBS:w [color=green];
+
+	# LA
+	# /
+
+	# A&C
+	DW:e -> AC:w [color=green];
+	TA:e -> AC:w [color=green];
+	GAS:e -> AC:w [color=green];
+
+	# PPD
+	IDBS:e -> PPD:e [style=dashed, color=green];
+
+	# CN
+	DW:e -> CN:w [color=green];
+	CSA:e -> CN:w [color=green];
+	CALC:e -> CN:w [color=green];
+
+	# FYS
+	# /
+
+	# NA
+	# /
+
+	# ES
+	# /
+
+	# =====================
+	# =	dependencies 3Ba	=
+	# =====================
+
+	# WP
+	CALC:e -> WP:w [color=green];
+	GP:e -> WP:w;
+	LA:e -> WP:w [color=green];
+	NA:e -> WP:w [color=green];
+
+	# SE
+	TA:e -> SE:w [color=green];
+	GAS:e -> SE:w [color=green];
+	IDBS:e -> SE:w [style=dashed, color=green];
+	PPD:e -> SE:w [style=dashed, color=green];
+
+	# TCS
+	GP:e -> TCS:w;
+	CN:e -> TCS:w;
+
+	# DS
+	GP:e -> DS:w;
+	US:e -> DS:w;
+
+	# AI
+	AC:e -> AI:w [color=green];
+
+	# DSGA
+	# /
+
+	# COMP
+	CSA:e -> COMP:w [color=green];
+	TA:e -> COMP:w [color=green];
+	GAS:e -> COMP:w [color=green];
+
+	# LBS
+	# /
+
+	# BAE
+	GP:e -> BAE:w;
+	PPD:e -> BAE:w [color=green];
+
+	SE:e -> BAE:e [style=dashed];
+	TCS:e -> BAE:e [style=dashed];
+	DS:e -> BAE:e [style=dashed];
+	AI:e -> BAE:e [style=dashed];
+	COMP:e -> BAE:e [style=dashed];
+
+}
