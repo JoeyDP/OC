@@ -23,7 +23,7 @@ digraph Studieprogramma{
                 {{ course.id }} [label="{{ course.shortName }}", height={{ course.height }}];
             {% endfor %}
 
-            {{ year.id }}_{{ semester.id }}_ratio [height=0.25, style=striped, color="forestgreen;{{ semester.spWork/semester.spTotal }}:orange", label="{{ semester.spWork }}      {{ semester.spTheory }}"]
+            {{ year.id }}_{{ semester.id }}_ratio [height=0.25, style=striped, color="forestgreen;{{ semester.spWork/semester.spTotal }}:orange", label="{{ semester.spWork }}{%if semester.spWork<10%} {% endif %}       {{ semester.spTheory }}"]
 
             {% if not last %}
             {{ year.id }}_sem [height=0, fixedsize=true, label="", color=black];

@@ -44,8 +44,8 @@ GAS = Course("Gegevensabstractie en -structuren", "GAS", 6, year1.semester1, spW
 
 # Semester 2
 TA = Course("Talen en Automaten", "T&A", 6, year1.semester2, spWork=3)
-PSE = Course("Project Software Engineering", "PSE", 6, year1.semester2, spWork=3)
-CALC = Course("Calculus", "CALC", 9, year1.semester2, spWork=3)
+PSE = Course("Project Software Engineering", "PSE", 6, year1.semester2, spWork=6)
+CALC = Course("Calculus", "CALC", 9, year1.semester2, spWork=0)
 CG = Course("Computer Graphics", "CG", 6, year1.semester2, spWork=3)
 
 
@@ -53,17 +53,17 @@ CG = Course("Computer Graphics", "CG", 6, year1.semester2, spWork=3)
 # Semester 1
 GP = Course("Gevorderd Programmeren", "GP", 6, year2.semester1, spWork=2)
 MB = Course("Machines en Berekenbaarheid", "M&B", 6, year2.semester1, spWork=3)
-US = Course("Uitbatingssystemen", "US", 6, year2.semester1, spWork=3)
-IDBS = Course("Introduction to Databases", "IDBS", 6, year2.semester1, spWork=3)
-LA = Course("Lineaire Algebra", "LA", 6, year2.semester1, spWork=3)
+US = Course("Uitbatingssystemen", "US", 6, year2.semester1, spWork=0)
+IDBS = Course("Introduction to Databases", "IDBS", 6, year2.semester1, spWork=0)
+LA = Course("Lineaire Algebra", "LA", 6, year2.semester1, spWork=0)
 
 # Semester 2
-AC = Course("Algoritmen en Complexiteit", "A&C", 6, year2.semester2, spWork=3)
-PPD = Course("Programming Project Databases", "PPD", 6, year2.semester2, spWork=3)
-CN = Course("Computernetwerken", "CN", 6, year2.semester2, spWork=3)
-FYS = Course("Fysica", "FYS", 6, year2.semester2, spWork=3)
-NA = Course("Numerieke Analyse", "NA", 3, year2.semester2, spWork=3)
-ES = Course("Elementaire Statistiek", "ES", 3, year2.semester2, spWork=3)
+AC = Course("Algoritmen en Complexiteit", "A&C", 6, year2.semester2, spWork=0)
+PPD = Course("Programming Project Databases", "PPD", 6, year2.semester2, spWork=6)
+CN = Course("Computernetwerken", "CN", 6, year2.semester2, spWork=0)
+FYS = Course("Fysica", "FYS", 6, year2.semester2, spWork=0)
+NA = Course("Numerieke Analyse", "NA", 3, year2.semester2, spWork=0)
+ES = Course("Elementaire Statistiek", "ES", 3, year2.semester2, spWork=1)
 
 
 # Year3
