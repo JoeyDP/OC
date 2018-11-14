@@ -21,8 +21,8 @@ class CourseCollection(object):
 class Year(CourseCollection):
     def __init__(self, nr):
         self.nr = nr
-        self.semester1 = Semester(1)
-        self.semester2 = Semester(2)
+        self.semester1 = Semester(1, self)
+        self.semester2 = Semester(2, self)
 
     @property
     def courses(self):
@@ -40,10 +40,17 @@ class Year(CourseCollection):
     def id(self):
         return "ba{}".format(self.nr)
 
+    def __lt__(self, other):
+        return self.nr < other.nr
+
+    def __le__(self, other):
+        return self.nr <= other.nr
+
 
 class Semester(CourseCollection):
-    def __init__(self, nr):
+    def __init__(self, nr, year):
         self.nr = nr
+        self.year = year
         self._courses = list()
 
     @property
@@ -59,6 +66,12 @@ class Semester(CourseCollection):
     @property
     def id(self):
         return "sem{}".format(self.nr)
+
+    def __lt__(self, other):
+        return self.year < other.year or self.nr < other.nr
+
+    def __le__(self, other):
+        return self.year < other.year or (self.year == other.year and self.nr <= other.nr)
 
 
 year1 = Year(1)

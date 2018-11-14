@@ -1,0 +1,168 @@
+digraph Studieprogramma{
+	node [shape="rect", pin=true, style=filled,color=white, height=0.7, fixedsize=true];
+	graph [ranksep="6", nodesep="0.2" splines=true, concentrate=true];
+	edge [constraint=false];
+
+	/*
+	3 SP = 0.25
+	6 SP = 0.7
+	9 SP = 1.15
+	12 SP = 1.6
+	*/
+
+	rankdir="LR"
+
+	{% for year in years %}
+	subgraph cluster_{{ year.id }}{
+		label = "{{ year.name }}"
+		style=filled;
+		color=lightgrey;
+
+        {% for semester in year.semesters %}
+            {% for course in semester.courses %}
+                {{ course.id }} [label="{{ course.shortName }}", height={{ course.height }}];
+            {% endfor %}
+
+			{% if includeWorkload %}
+            	{{ year.id }}_{{ semester.id }}_ratio [height=0.25, style=striped, color="forestgreen;{{ semester.spWork/semester.spTotal }}:orange", label="{{ semester.spWork }}{%if semester.spWork<10%} {% endif %}       {{ semester.spTheory }}"]
+			{% endif %}
+
+            {% if not loop.last %}
+                {{ year.id }}_sem [height=0, fixedsize=true, label="", color=black];
+            {% endif %}
+        {% endfor %}
+	}
+
+	{% endfor %}
+
+	# align clusters by adding invis edge between top items.
+	{
+		edge	[constraint=true, style=invis];
+        {% for i in range(years|length - 1) %}
+            {{ years[i].courses[0].id }}:ne -> {{ years[i+1].courses[0].id }}:nw;
+        {% endfor %}
+	}
+
+    {% for year in years %}
+        # =====================
+        # =	dependencies {{ year.name }}	=
+        # =====================
+        {% for course in year.courses %}
+            # {{ course.shortName|safe }}
+            {% for dep in course.getDependencies(absolute=absolute) %}
+                {% if absolute %}
+                    {% set color = "black" %}
+                {% elif dep.isNew() %}
+                    {% set color = "green" %}
+                {% elif dep.isChanged() %}
+                    {% set color = "blue" %}
+                {% elif dep.isRemoved() %}
+                    {% set color = "red" %}
+                {% else %}
+                    {% set color = "black" %}
+                {% endif %}
+                {# Connect same year courses on left side#}
+                {% if dep.source.year == dep.dest.year %}
+                    {% set side = 'e' %}
+                {% else %}
+                    {% set side = 'w' %}
+                {% endif %}
+                {{ dep.source.id }}:e -> {{ dep.dest.id }}:{{ side }} [color={{ color }}{% if dep.isSoft() %}, style="dashed"{% endif %}];
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+
+
+{#	# =====================#}
+{#	# =	dependencies 2Ba	=#}
+{#	# =====================#}
+{##}
+{#	# GP#}
+{# 	IP:e -> GP:w;#}
+{#	CSA:e -> GP:w;#}
+{#	PSE:e -> GP:w;#}
+{#	CG:e -> GP:w;#}
+{##}
+{#	# M&B#}
+{#	TA:e -> MB:w;#}
+{##}
+{#	# US#}
+{#	CSA:e -> US:w;#}
+{##}
+{#	# IDBS#}
+{#	GAS:e -> IDBS:w;#}
+{##}
+{#	# LA#}
+{#	# /#}
+{##}
+{#	# A&C#}
+{#	DW:e -> AC:w;#}
+{#	TA:e -> AC:w;#}
+{#	GAS:e -> AC:w;#}
+{##}
+{#	# PPD#}
+{#	IDBS:e -> PPD:e [style=dashed];#}
+{##}
+{#	# CN#}
+{#	DW:e -> CN:w;#}
+{#	CSA:e -> CN:w;#}
+{#	CALC:e -> CN:w;#}
+{##}
+{#	# FYS#}
+{#	# /#}
+{##}
+{#	# NA#}
+{#	# /#}
+{##}
+{#	# ES#}
+{#	# /#}
+{##}
+{#	# =====================#}
+{#	# =	dependencies 3Ba	=#}
+{#	# =====================#}
+{##}
+{#	# WP#}
+{#	CALC:e -> WP:w;#}
+{#	GP:e -> WP:w;#}
+{#	LA:e -> WP:w;#}
+{#	NA:e -> WP:w;#}
+{##}
+{#	# SE#}
+{#	TA:e -> SE:w;#}
+{#	GAS:e -> SE:w;#}
+{#	IDBS:e -> SE:w [style=dashed];#}
+{#	PPD:e -> SE:w [style=dashed];#}
+{##}
+{#	# TCS#}
+{#	GP:e -> TCS:w;#}
+{#	CN:e -> TCS:w;#}
+{##}
+{#	# DS#}
+{#	GP:e -> DS:w;#}
+{#	US:e -> DS:w;#}
+{##}
+{#	# AI#}
+{#	AC:e -> AI:w;#}
+{##}
+{#	# DSGA#}
+{#	# /#}
+{##}
+{#	# COMP#}
+{#	CSA:e -> COMP:w;#}
+{#	TA:e -> COMP:w;#}
+{#	GAS:e -> COMP:w;#}
+{##}
+{#	# LBS#}
+{#	# /#}
+{##}
+{#	# BAE#}
+{#	GP:e -> BAE:w;#}
+{#	PPD:e -> BAE:w;#}
+{##}
+{#	SE:e -> BAE:e [style=dashed];#}
+{#	TCS:e -> BAE:e [style=dashed];#}
+{#	DS:e -> BAE:e [style=dashed];#}
+{#	AI:e -> BAE:e [style=dashed];#}
+{#	COMP:e -> BAE:e [style=dashed];#}
+
+}
