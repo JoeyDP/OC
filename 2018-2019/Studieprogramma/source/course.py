@@ -40,11 +40,11 @@ class Course(object):
         course.requiredFor[self] = d
         return d
 
-    def addNewDependency(self, course):
-        return self.addDependency(course, new=True)
+    def addNewDependency(self, course, soft=False):
+        return self.addDependency(course, soft=soft, new=True)
 
     def getDependency(self, course):
-        return self.dependsOn.get(course)
+        return self.dependsOn[course]
 
     def getDependencies(self, absolute=False):
         values = self.dependsOn.values()

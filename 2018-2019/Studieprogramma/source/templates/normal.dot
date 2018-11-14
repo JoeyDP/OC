@@ -67,102 +67,19 @@ digraph Studieprogramma{
                 {% else %}
                     {% set side = 'w' %}
                 {% endif %}
-                {{ dep.source.id }}:e -> {{ dep.dest.id }}:{{ side }} [color={{ color }}{% if dep.isSoft() %}, style="dashed"{% endif %}];
+                {% if highlightCourse %}
+                    {% if highlightCourse == dep.source or highlightCourse == dep.dest %}
+                        {% set penwidth = "3" %}
+                    {% else %}
+                        {% set penwidth = "0.1" %}
+                    {% endif %}
+                {% else %}
+                    {% set penwidth = "1" %}
+                {% endif %}
+                {{ dep.source.id }}:e -> {{ dep.dest.id }}:{{ side }} [color={{ color }}{% if dep.isSoft() %}, style="dashed"{% endif %}, penwidth={{ penwidth }}];
             {% endfor %}
         {% endfor %}
     {% endfor %}
 
-
-{#	# =====================#}
-{#	# =	dependencies 2Ba	=#}
-{#	# =====================#}
-{##}
-{#	# GP#}
-{# 	IP:e -> GP:w;#}
-{#	CSA:e -> GP:w;#}
-{#	PSE:e -> GP:w;#}
-{#	CG:e -> GP:w;#}
-{##}
-{#	# M&B#}
-{#	TA:e -> MB:w;#}
-{##}
-{#	# US#}
-{#	CSA:e -> US:w;#}
-{##}
-{#	# IDBS#}
-{#	GAS:e -> IDBS:w;#}
-{##}
-{#	# LA#}
-{#	# /#}
-{##}
-{#	# A&C#}
-{#	DW:e -> AC:w;#}
-{#	TA:e -> AC:w;#}
-{#	GAS:e -> AC:w;#}
-{##}
-{#	# PPD#}
-{#	IDBS:e -> PPD:e [style=dashed];#}
-{##}
-{#	# CN#}
-{#	DW:e -> CN:w;#}
-{#	CSA:e -> CN:w;#}
-{#	CALC:e -> CN:w;#}
-{##}
-{#	# FYS#}
-{#	# /#}
-{##}
-{#	# NA#}
-{#	# /#}
-{##}
-{#	# ES#}
-{#	# /#}
-{##}
-{#	# =====================#}
-{#	# =	dependencies 3Ba	=#}
-{#	# =====================#}
-{##}
-{#	# WP#}
-{#	CALC:e -> WP:w;#}
-{#	GP:e -> WP:w;#}
-{#	LA:e -> WP:w;#}
-{#	NA:e -> WP:w;#}
-{##}
-{#	# SE#}
-{#	TA:e -> SE:w;#}
-{#	GAS:e -> SE:w;#}
-{#	IDBS:e -> SE:w [style=dashed];#}
-{#	PPD:e -> SE:w [style=dashed];#}
-{##}
-{#	# TCS#}
-{#	GP:e -> TCS:w;#}
-{#	CN:e -> TCS:w;#}
-{##}
-{#	# DS#}
-{#	GP:e -> DS:w;#}
-{#	US:e -> DS:w;#}
-{##}
-{#	# AI#}
-{#	AC:e -> AI:w;#}
-{##}
-{#	# DSGA#}
-{#	# /#}
-{##}
-{#	# COMP#}
-{#	CSA:e -> COMP:w;#}
-{#	TA:e -> COMP:w;#}
-{#	GAS:e -> COMP:w;#}
-{##}
-{#	# LBS#}
-{#	# /#}
-{##}
-{#	# BAE#}
-{#	GP:e -> BAE:w;#}
-{#	PPD:e -> BAE:w;#}
-{##}
-{#	SE:e -> BAE:e [style=dashed];#}
-{#	TCS:e -> BAE:e [style=dashed];#}
-{#	DS:e -> BAE:e [style=dashed];#}
-{#	AI:e -> BAE:e [style=dashed];#}
-{#	COMP:e -> BAE:e [style=dashed];#}
 
 }

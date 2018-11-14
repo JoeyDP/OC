@@ -35,3 +35,8 @@ class Dependency(object):
     def isSoft(self):
         return self.soft
 
+    def setSoft(self, b):
+        if self.soft != b:
+            self.status = Status.Changed
+        self.soft = b
+
