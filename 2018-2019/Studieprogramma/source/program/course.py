@@ -121,8 +121,8 @@ DS = Course("Gedistribueerde Systemen", "DS", 6, year3.semester1, spWork=3)
 AI = Course("Aritifical Intelligence", "AI", 6, year3.semester1, spWork=3)
 
 # Semester 2
-DSGA = Course("Datastructuren en Graafalgoritmen", "DSGA", 3, year3.semester2, spWork=0)
 COMP = Course("Compilers", "COMP", 6, year3.semester2, spWork=3)
+DSGA = Course("Datastructuren en Graafalgoritmen", "DSGA", 3, year3.semester2, spWork=0)
 LBS = Course("Levensbeschouwing", "LBS", 3, year3.semester2, spWork=0)
 BAE = Course("Bachelor Eindwerk", "BAE", 12, year3.semester2, spWork=12)
 KZVK = Course("Keuzevakken", "KZVK", 6, year3.semester2, spWork=0)

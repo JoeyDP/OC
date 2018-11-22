@@ -1,7 +1,13 @@
 digraph Studieprogramma{
 	node [shape="rect", pin=true, style=filled,color=white, height=0.7, fixedsize=true];
-	graph [ranksep="6", nodesep="0.2" splines=true, concentrate=true];
+	graph [ranksep="6", nodesep="0.2" splines=true, concentrate=false];
 	edge [constraint=false];
+
+
+    labelloc="t";
+    label=<<FONT POINT-SIZE="50">{{ title }}</FONT>>;
+
+    fontsize=25
 
 	/*
 	3 SP = 0.25
@@ -21,7 +27,7 @@ digraph Studieprogramma{
         {% for semester in year.semesters %}
             {% for course in semester.courses %}
                 {% if course.moved and not absolute %}
-                    {% set color = "blue" %}
+                    {% set color = "green" %}
                 {%  else %}
                     {% set color = "white" %}
                 {% endif %}

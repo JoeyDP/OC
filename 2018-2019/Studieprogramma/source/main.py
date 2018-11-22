@@ -36,18 +36,19 @@ def current(workload: bool=False):
     """ Generate the current program. """
     template = env.get_template('normal.dot')
     output = getOutputPath("current.dot")
-    render(template, output, includeWorkload=workload)
+    render(template, output, title="Current", includeWorkload=workload)
 
 
 @bacli.command
 def solution(workload: bool=False):
     """ Generate solution 1 with absolute and relative visualization. """
-    doSolutionDep()
+    doSolution()
+
     template = env.get_template('normal.dot')
     output = getOutputPath("solution_abs.dot")
-    render(template, output, includeWorkload=workload, absolute=True)
+    render(template, output, title="Proposal", includeWorkload=workload, absolute=True)
     output = getOutputPath("solution_rel.dot")
-    render(template, output, includeWorkload=workload, absolute=False)
+    render(template, output, title="Proposal (Relative)", includeWorkload=workload, absolute=False)
 
 
 @bacli.command
@@ -60,16 +61,16 @@ def per_course(workload: bool=False):
             os.makedirs(getOutputPath(course.id), exist_ok=True)
             template = env.get_template('normal.dot')
             output = getOutputPath(os.path.join(course.id, "current.dot"))
-            render(template, output, includeWorkload=workload, highlightCourse=course)
+            render(template, output, title="Current {}".format(course.shortName), includeWorkload=workload, highlightCourse=course)
 
         pbar.update()
-        doSolutionDep()
+        doSolution()
         for course in tqdm(courses):
             template = env.get_template('normal.dot')
             output = getOutputPath(os.path.join(course.id, "solution_abs.dot"))
-            render(template, output, includeWorkload=workload, absolute=True, highlightCourse=course)
+            render(template, output, title="Proposal {}".format(course.shortName), includeWorkload=workload, absolute=True, highlightCourse=course)
             output = getOutputPath(os.path.join(course.id, "solution_rel.dot"))
-            render(template, output, includeWorkload=workload, absolute=False, highlightCourse=course)
+            render(template, output, title="Proposal {} (Relative)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course)
 
 
 @bacli.command
@@ -77,6 +78,14 @@ def legend():
     template = env.get_template('legend.dot')
     output = getOutputPath("legend.dot")
     render(template, output, courses=getCourses())
+
+
+def doSolution():
+    doSolutionDep()
+    doSolutionCourses()
+
+    for course in getCourses():
+        course.validate()
 
 
 def doSolutionDep():
@@ -118,10 +127,7 @@ def doSolutionDep():
     BAE.getDependency(PPD).setSoft(True)
 
 
-@bacli.command
-def solution2(noWorkload: bool=False):
-    doSolutionDep()
-
+def doSolutionCourses():
     # move courses
     US.moveTo(year2.semester2)
     AC.moveTo(year2.semester1)
@@ -129,19 +135,9 @@ def solution2(noWorkload: bool=False):
     AI.moveTo(year2.semester1)
     AC.moveTo(year3.semester1)
 
-    for course in getCourses():
-        course.validate()
-
-    # render
-    template = env.get_template('normal.dot')
-    output = getOutputPath("solution2_abs.dot")
-    render(template, output, includeWorkload=not noWorkload, absolute=True)
-    output = getOutputPath("solution2_rel.dot")
-    render(template, output, includeWorkload=not noWorkload, absolute=False)
-
 
 @bacli.command
-def solution3(noWorkload: bool=False):
+def experiment(noWorkload: bool=False):
     doSolutionDep()
 
     # move courses
