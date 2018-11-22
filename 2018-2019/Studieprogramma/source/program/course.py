@@ -1,6 +1,6 @@
 
-from year import *
-from dependency import Dependency
+from .year import *
+from .dependency import Dependency
 
 
 BASE_HEIGHT = 0.25

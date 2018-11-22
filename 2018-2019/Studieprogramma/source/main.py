@@ -5,8 +5,8 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 import pydot
 from tqdm import tqdm
 
-from course import *
-from year import *
+from program.course import *
+from program.year import *
 
 
 env = Environment(
@@ -33,6 +33,7 @@ def getOutputPath(filename):
 
 @bacli.command
 def current(workload: bool=False):
+    """ Generate the current program. """
     template = env.get_template('normal.dot')
     output = getOutputPath("current.dot")
     render(template, output, includeWorkload=workload)
@@ -40,6 +41,7 @@ def current(workload: bool=False):
 
 @bacli.command
 def solution(workload: bool=False):
+    """ Generate solution 1 with absolute and relative visualization. """
     doSolutionDep()
     template = env.get_template('normal.dot')
     output = getOutputPath("solution_abs.dot")
@@ -50,6 +52,7 @@ def solution(workload: bool=False):
 
 @bacli.command
 def per_course(workload: bool=False):
+    """ Generate solution 1 per course (with highlighting). """
     courses = getCourses()
 
     with tqdm(total=2) as pbar:
@@ -67,6 +70,13 @@ def per_course(workload: bool=False):
             render(template, output, includeWorkload=workload, absolute=True, highlightCourse=course)
             output = getOutputPath(os.path.join(course.id, "solution_rel.dot"))
             render(template, output, includeWorkload=workload, absolute=False, highlightCourse=course)
+
+
+@bacli.command
+def legend():
+    template = env.get_template('legend.dot')
+    output = getOutputPath("legend.dot")
+    render(template, output, courses=getCourses())
 
 
 def doSolutionDep():
@@ -115,11 +125,6 @@ def solution2(noWorkload: bool=False):
     # move courses
     US.moveTo(year2.semester2)
     AC.moveTo(year2.semester1)
-
-    # TODO: In first proposition?
-    # IDBS.getDependency(GAS).setSoft(True)
-    # IDBS.moveTo(year1.semester2)
-    # PSE.moveTo(year2.semester1)
 
     AI.moveTo(year2.semester1)
     AC.moveTo(year3.semester1)
@@ -173,6 +178,13 @@ def solution3(noWorkload: bool=False):
     render(template, output, includeWorkload=not noWorkload, absolute=False)
 
 
+def toPdf(inpath, outpath=None):
+    if outpath is None:
+        outpath = toExtension(inpath, ".pdf")
+    (graph,) = pydot.graph_from_dot_file(inpath)
+    graph.write_pdf(outpath)
+
+
 def render(template, output, **kwargs):
 
     templateArgs = {
@@ -185,8 +197,7 @@ def render(template, output, **kwargs):
         content = template.render(**templateArgs)
         f.write(content)
 
-    (graph,) = pydot.graph_from_dot_file(output)
-    graph.write_pdf(toExtension(output, ".pdf"))
+    toPdf(output)
 
 
 def toExtension(p, ext):

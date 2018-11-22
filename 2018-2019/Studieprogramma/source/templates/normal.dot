@@ -21,7 +21,7 @@ digraph Studieprogramma{
         {% for semester in year.semesters %}
             {% for course in semester.courses %}
                 {% if course.moved and not absolute %}
-                    {% set color = "green" %}
+                    {% set color = "blue" %}
                 {%  else %}
                     {% set color = "white" %}
                 {% endif %}

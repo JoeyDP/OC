@@ -1,0 +1,48 @@
+digraph {
+  rankdir=LR
+  node [shape=plaintext]
+
+  subgraph cluster_courses {
+    label = "Cursussen";
+    courses [label=<<table border="0" cellpadding="5" cellspacing="0" cellborder="0">
+    {% for course in courses %}
+      <tr><td align="left" port="i1">{{ course.shortName }}</td><td align="left">{{ course.name }}</td></tr>
+    {% endfor %}
+      </table>>]
+    key3 [label=<<table border="0" cellpadding="2" cellspacing="0" cellborder="0">
+      <tr><td port="i1">&nbsp;</td></tr>
+      <tr><td port="i2">&nbsp;</td></tr>
+      <tr><td port="i3">&nbsp;</td></tr>
+      <tr><td port="i4">&nbsp;</td></tr>
+      <tr><td port="i5">&nbsp;</td></tr>
+      </table>>]
+
+    # fix placement a bit
+    courses:i1:e -> key3:i1:w [style=invis]
+  }
+
+  subgraph cluster_legend {
+    label = "Legende";
+    key [label=<<table border="0" cellpadding="2" cellspacing="0" cellborder="0">
+      <tr><td align="right" port="i1">Credit of MIN 8/20</td></tr>
+      <tr><td align="right" port="i2">Ingeschreven of Credit</td></tr>
+      <tr><td align="right" port="i3">Toegevoegd</td></tr>
+      <tr><td align="right" port="i4">Verwijderd</td></tr>
+      <tr><td align="right" port="i5">Gewijzigd</td></tr>
+      <tr><td align="right" port="i6">Hoogte Vak = Aantal SP</td></tr>
+      </table>>]
+    key2 [label=<<table border="0" cellpadding="2" cellspacing="0" cellborder="0">
+      <tr><td port="i1">&nbsp;</td></tr>
+      <tr><td port="i2">&nbsp;</td></tr>
+      <tr><td port="i3">&nbsp;</td></tr>
+      <tr><td port="i4">&nbsp;</td></tr>
+      <tr><td port="i5">&nbsp;</td></tr>
+      </table>>]
+    key:i1:e -> key2:i1:w []
+    key:i2:e -> key2:i2:w [style=dashed]
+    key:i3:e -> key2:i3:w [color=green]
+    key:i4:e -> key2:i4:w [color=red]
+    key:i5:e -> key2:i5:w [color=blue]
+  }
+
+}
