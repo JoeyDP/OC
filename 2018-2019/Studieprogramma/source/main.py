@@ -75,6 +75,7 @@ def per_course(workload: bool=False):
 
 @bacli.command
 def legend():
+    """ Generate the legend. """
     template = env.get_template('legend.dot')
     output = getOutputPath("legend.dot")
     render(template, output, courses=getCourses())
@@ -138,6 +139,7 @@ def doSolutionCourses():
 
 @bacli.command
 def experiment(noWorkload: bool=False):
+    """ Use this command to experiment with changes. """
     doSolutionDep()
 
     # move courses
