@@ -30,6 +30,7 @@ digraph {
       <tr><td align="right" port="i4">Verwijderd</td></tr>
       <tr><td align="right" port="i5">Gewijzigd</td></tr>
       <tr><td align="right" port="i6">Hoogte Vak = Aantal SP</td></tr>
+      <tr><td align="right" port="i7">SP Praktijk/Theorie</td></tr>
       </table>>]
     key2 [label=<<table border="0" cellpadding="2" cellspacing="0" cellborder="0">
       <tr><td port="i1">&nbsp;</td></tr>
@@ -43,6 +44,9 @@ digraph {
     key:i3:e -> key2:i3:w [color=green]
     key:i4:e -> key2:i4:w [color=red]
     key:i5:e -> key2:i5:w [color=blue]
+
+    sp_ratio [shape=rect, fontsize=10, height=0.10, style=striped, color="forestgreen;0.33:orange", label="10             20"]
+    key:i7 -> sp_ratio [style=invis]
   }
 
 }
