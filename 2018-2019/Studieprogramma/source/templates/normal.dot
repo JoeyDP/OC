@@ -20,7 +20,12 @@ digraph Studieprogramma{
 
         {% for semester in year.semesters %}
             {% for course in semester.courses %}
-                {{ course.id }} [label="{{ course.shortName }}", height={{ course.height }}];
+                {% if course.moved and not absolute %}
+                    {% set color = "green" %}
+                {%  else %}
+                    {% set color = "white" %}
+                {% endif %}
+                {{ course.id }} [label="{{ course.shortName }}", height={{ course.height }}, color={{ color }}];
             {% endfor %}
 
 			{% if includeWorkload %}

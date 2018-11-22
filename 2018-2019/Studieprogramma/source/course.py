@@ -18,6 +18,7 @@ class Course(object):
         semester.addCourse(self)
         self.dependsOn = dict()
         self.requiredFor = dict()
+        self.moved = False
 
     @property
     def id(self):
@@ -54,6 +55,18 @@ class Course(object):
 
     def getDependants(self):
         return self.requiredFor.values()
+
+    def validate(self):
+        for dep in self.dependsOn.values():
+            dep.validate()
+
+    def moveTo(self, semester):
+        if semester == self.semester:
+            raise RuntimeError("Tried to move course to same semester")
+        self.semester.removeCourse(self)
+        self.semester = semester
+        self.semester.addCourse(self)
+        self.moved = True
 
     def __str__(self):
         return self.name

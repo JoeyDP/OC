@@ -14,11 +14,11 @@ class Status(Enum):
 class Dependency(object):
     """ Dependency for course """
     def __init__(self, source, dest, soft=False, new=False):
-        assert source <= dest, "{} should be before {}".format(source, dest)
         self.source = source
         self.dest = dest
         self.soft = soft
         self.status = Status.New if new else Status.Normal
+        self.validate()
 
     def remove(self):
         self.status = Status.Removed
@@ -36,7 +36,16 @@ class Dependency(object):
         return self.soft
 
     def setSoft(self, b):
-        if self.soft != b:
-            self.status = Status.Changed
+        if self.soft == b:
+            raise RuntimeError("setSoft to same value as before.")
+        self.status = Status.Changed
         self.soft = b
+
+    def validate(self):
+        if self.status != Status.Removed:
+            if self.isSoft():
+                assert self.source.semester <= self.dest.semester, "{} should be before {}".format(self.source, self.dest)
+            else:
+                assert self.source.year < self.dest.year, "{} should be before {}".format(self.source, self.dest)
+
 
