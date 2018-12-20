@@ -58,4 +58,4 @@ CHRIS_B = Teacher("Chris", "Blondia")
 ANNIE_C = Teacher("Annie", "Cuyt")
 JAN_BOUCKAERT = Teacher("Jan", "Bouckaert")
 
-NNB = Teacher("-", "NNB")
+NNB = Teacher("", "NNB")
