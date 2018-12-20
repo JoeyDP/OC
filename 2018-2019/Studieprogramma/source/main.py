@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 from program.course import *
 from program.year import *
-
+from program.teacher import *
 
 env = Environment(
     loader=FileSystemLoader('templates/'),
@@ -18,6 +18,7 @@ env = Environment(
 
 
 YEARS = [year1, year2, year3]
+
 
 def getCourses():
     return [c for y in YEARS for c in y.courses]
@@ -36,7 +37,7 @@ def current(workload: bool=False):
     """ Generate the current program. """
     template = env.get_template('normal.dot')
     output = getOutputPath("current.dot")
-    render(template, output, title="Current", includeWorkload=workload)
+    render(template, output, title="Origineel", includeWorkload=workload)
 
 
 @bacli.command
@@ -46,9 +47,9 @@ def solution(workload: bool=False):
 
     template = env.get_template('normal.dot')
     output = getOutputPath("solution_abs.dot")
-    render(template, output, title="Proposal", includeWorkload=workload, absolute=True)
+    render(template, output, title="Voortstel", includeWorkload=workload, absolute=True)
     output = getOutputPath("solution_rel.dot")
-    render(template, output, title="Proposal (Relative)", includeWorkload=workload, absolute=False)
+    render(template, output, title="Voortstel (Relatief)", includeWorkload=workload, absolute=False)
 
 
 @bacli.command
@@ -61,16 +62,39 @@ def per_course(workload: bool=False):
             os.makedirs(getOutputPath(course.id), exist_ok=True)
             template = env.get_template('normal.dot')
             output = getOutputPath(os.path.join(course.id, "current.dot"))
-            render(template, output, title="Current {}".format(course.shortName), includeWorkload=workload, highlightCourse=course)
+            render(template, output, title="Origineel {}".format(course.shortName), includeWorkload=workload, highlightCourse=course)
 
         pbar.update()
         doSolution()
         for course in tqdm(courses):
             template = env.get_template('normal.dot')
             output = getOutputPath(os.path.join(course.id, "solution_abs.dot"))
-            render(template, output, title="Proposal {}".format(course.shortName), includeWorkload=workload, absolute=True, highlightCourse=course)
+            render(template, output, title="Voortstel {}".format(course.shortName), includeWorkload=workload, absolute=True, highlightCourse=course)
             output = getOutputPath(os.path.join(course.id, "solution_rel.dot"))
-            render(template, output, title="Proposal {} (Relative)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course)
+            render(template, output, title="Voortstel {} (Relatief)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course)
+
+
+@bacli.command
+def per_teacher(workload: bool=False):
+        with tqdm(total=2) as pbar:
+            for teacher in tqdm(Teacher.all):
+                for course in tqdm(teacher.courses):
+                    outputPath = getOutputPath(os.path.join(teacher.fullName, course.id))
+                    os.makedirs(outputPath, exist_ok=True)
+                    template = env.get_template('normal.dot')
+                    output = os.path.join(outputPath, "current.dot")
+                    render(template, output, title="Origineel {}".format(course.shortName), includeWorkload=workload, highlightCourse=course)
+
+            pbar.update()
+            doSolution()
+            for teacher in tqdm(Teacher.all):
+                for course in tqdm(teacher.courses):
+                    outputPath = getOutputPath(os.path.join(teacher.fullName, course.id))
+                    template = env.get_template('normal.dot')
+                    output = os.path.join(outputPath, "solution_abs.dot")
+                    render(template, output, title="Voortstel {}".format(course.shortName), includeWorkload=workload, absolute=True, highlightCourse=course)
+                    output = os.path.join(outputPath, "solution_rel.dot")
+                    render(template, output, title="Voortstel {} (Relatief)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course)
 
 
 @bacli.command
@@ -105,6 +129,7 @@ def doSolutionDep():
     SE.getDependency(PPD).remove()
     SE.getDependency(GAS).remove()
     SE.getDependency(TA).remove()
+    SE.addNewDependency(PSE)
 
     # DS
     DS.getDependency(GP).remove()
@@ -187,6 +212,7 @@ def render(template, output, **kwargs):
 
     templateArgs = {
         'years': YEARS,
+        'teachers': Teacher.all,
         'absolute': True
     }
     templateArgs.update(kwargs)

@@ -1,5 +1,6 @@
 
 from .year import *
+from .teacher import *
 from .dependency import Dependency
 
 
@@ -8,10 +9,12 @@ PADDING = 0.2
 
 
 class Course(object):
-    def __init__(self, name, shortName, sp, semester, spWork=0):
+    def __init__(self, name, shortName, sp, semester, teacher, spWork=0):
         assert spWork <= sp
         self.name = name
         self.shortName = shortName
+        self.teacher = teacher
+        teacher.addCourse(self)
         self.sp = sp
         self.spWork = spWork
         self.semester = semester
@@ -19,6 +22,7 @@ class Course(object):
         self.dependsOn = dict()
         self.requiredFor = dict()
         self.moved = False
+        self.changes = list()
 
     @property
     def id(self):
@@ -36,12 +40,18 @@ class Course(object):
     def height(self):
         return (BASE_HEIGHT + PADDING) * (self.sp / 3) - PADDING
 
+    def logChange(self, change: str):
+        self.changes.append(change)
+
     def addDependency(self, course, soft=False, new=False):
         d = self.dependsOn[course] = Dependency(course, self, soft=soft, new=new)
         course.requiredFor[self] = d
         return d
 
     def addNewDependency(self, course, soft=False):
+        change = "Nieuwe dependency toegevoegd van {} naar {}.".format(course.shortName, self.shortName)
+        self.logChange(change)
+        course.logChange(change)
         return self.addDependency(course, soft=soft, new=True)
 
     def getDependency(self, course):
@@ -83,49 +93,50 @@ class Course(object):
 
 # Year 1
 # Semester 1
-IP = Course("Inleiding Programmeren", "IP", 9, year1.semester1, spWork=5)
-DW = Course("Discrete Wiskunde", "DW", 9, year1.semester1, spWork=0)
-CSA = Course("Computersystemen en -architectuur", "CSA", 9, year1.semester1, spWork=4)
-GAS = Course("Gegevensabstractie en -structuren", "GAS", 6, year1.semester1, spWork=3)
+IP = Course("Inleiding Programmeren", "IP", 9, year1.semester1, TOON, spWork=5)
+DW = Course("Discrete Wiskunde", "DW", 9, year1.semester1, STIJN_S, spWork=0)
+CSA = Course("Computersystemen en -architectuur", "CSA", 9, year1.semester1, HANS, spWork=4)
+GAS = Course("Gegevensabstractie en -structuren", "GAS", 6, year1.semester1, ELS, spWork=3)
 
 # Semester 2
-TA = Course("Talen en Automaten", "T&A", 6, year1.semester2, spWork=3)
-PSE = Course("Project Software Engineering", "PSE", 6, year1.semester2, spWork=6)
-CALC = Course("Calculus", "CALC", 9, year1.semester2, spWork=0)
-CG = Course("Computer Graphics", "CG", 6, year1.semester2, spWork=3)
+TA = Course("Talen en Automaten", "T&A", 6, year1.semester2, ELS, spWork=3)
+PSE = Course("Project Software Engineering", "PSE", 6, year1.semester2, SERGE, spWork=6)
+CALC = Course("Calculus", "CALC", 9, year1.semester2, WERNER_PEETERS, spWork=0)
+CG = Course("Computer Graphics", "CG", 6, year1.semester2, BENNY, spWork=3)
 
 
 # Year2
 # Semester 1
-GP = Course("Gevorderd Programmeren", "GP", 6, year2.semester1, spWork=2)
-MB = Course("Machines en Berekenbaarheid", "M&B", 6, year2.semester1, spWork=3)
-US = Course("Uitbatingssystemen", "US", 6, year2.semester1, spWork=0)
-IDBS = Course("Introduction to Databases", "IDBS", 6, year2.semester1, spWork=0)
-LA = Course("Lineaire Algebra", "LA", 6, year2.semester1, spWork=0)
+GP = Course("Gevorderd Programmeren", "GP", 6, year2.semester1, JAN_B, spWork=2)
+MB = Course("Machines en Berekenbaarheid", "M&B", 6, year2.semester1, ELS, spWork=3)
+US = Course("Uitbatingssystemen", "US", 6, year2.semester1, BENNY, spWork=0)
+IDBS = Course("Introduction to Databases", "IDBS", 6, year2.semester1, TOON, spWork=0)
+LA = Course("Lineaire Algebra", "LA", 6, year2.semester1, LIEVEN_LE_BRUYN, spWork=0)
 
 # Semester 2
-AC = Course("Algoritmen en Complexiteit", "A&C", 6, year2.semester2, spWork=0)
-PPD = Course("Programming Project Databases", "PPD", 6, year2.semester2, spWork=6)
-CN = Course("Computernetwerken", "CN", 6, year2.semester2, spWork=0)
-FYS = Course("Fysica", "FYS", 6, year2.semester2, spWork=0)
-NA = Course("Numerieke Analyse", "NA", 3, year2.semester2, spWork=0)
-ES = Course("Elementaire Statistiek", "ES", 3, year2.semester2, spWork=1)
+AC = Course("Algoritmen en Complexiteit", "A&C", 6, year2.semester2, FLORIS, spWork=0)
+PPD = Course("Programming Project Databases", "PPD", 6, year2.semester2, BART, spWork=6)
+CN = Course("Computernetwerken", "CN", 6, year2.semester2, CHRIS_B, spWork=0)
+FYS = Course("Fysica", "FYS", 6, year2.semester2, JOKE_H, spWork=0)
+NA = Course("Numerieke Analyse", "NA", 3, year2.semester2, KAREL_INT_HOUT, spWork=0)
+ES = Course("Elementaire Statistiek", "ES", 3, year2.semester2, NNB, spWork=1)
 
 
 # Year3
 # Semester 1
-WP = Course("Wetenschappelijk Programmeren", "WP", 6, year3.semester1, spWork=3)
-SE = Course("Software Engineering", "SE", 6, year3.semester1, spWork=3)
-TCS = Course("Telecommunicatiesystemen", "TCS", 6, year3.semester1, spWork=3)
-DS = Course("Gedistribueerde Systemen", "DS", 6, year3.semester1, spWork=3)
-AI = Course("Aritifical Intelligence", "AI", 6, year3.semester1, spWork=3)
+WP = Course("Wetenschappelijk Programmeren", "WP", 6, year3.semester1, ANNIE_C, spWork=3)
+SE = Course("Software Engineering", "SE", 6, year3.semester1, SERGE, spWork=3)
+TCS = Course("Telecommunicatiesystemen", "TCS", 6, year3.semester1, CHRIS_B, spWork=3)
+DS = Course("Gedistribueerde Systemen", "DS", 6, year3.semester1, STEVEN_L, spWork=3)
+AI = Course("Aritifical Intelligence", "AI", 6, year3.semester1, BART, spWork=3)
 
 # Semester 2
-COMP = Course("Compilers", "COMP", 6, year3.semester2, spWork=3)
-DSGA = Course("Datastructuren en Graafalgoritmen", "DSGA", 3, year3.semester2, spWork=0)
-LBS = Course("Levensbeschouwing", "LBS", 3, year3.semester2, spWork=0)
-BAE = Course("Bachelor Eindwerk", "BAE", 12, year3.semester2, spWork=12)
-KZVK = Course("Keuzevakken", "KZVK", 6, year3.semester2, spWork=0)
+COMP = Course("Compilers", "COMP", 6, year3.semester2, GUILLERMO_ALBERTO_PEREZ, spWork=3)
+DSGA = Course("Datastructuren en Graafalgoritmen", "DSGA", 3, year3.semester2, BENNY, spWork=0)
+LBS = Course("Levensbeschouwing", "LBS", 3, year3.semester2, PATRICK_L, spWork=0)
+BAE = Course("Bachelor Eindwerk", "BAE", 12, year3.semester2, JAN_B, spWork=12)
+
+KZVK = Course("Keuzevakken", "KZVK", 6, year3.semester2, NNB, spWork=0)
 
 
 # =======================

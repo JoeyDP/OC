@@ -22,6 +22,9 @@ class Dependency(object):
 
     def remove(self):
         self.status = Status.Removed
+        change = "Dependency van {} naar {} verwijderd.".format(self.source.shortName, self.dest.shortName)
+        self.source.logChange(change)
+        self.dest.logChange(change)
 
     def isNew(self):
         return self.status == Status.New
@@ -40,6 +43,9 @@ class Dependency(object):
             raise RuntimeError("setSoft to same value as before.")
         self.status = Status.Changed
         self.soft = b
+        change = "Dependency van {} naar {} verzwakt.".format(self.source.shortName, self.dest.shortName)
+        self.source.logChange(change)
+        self.dest.logChange(change)
 
     def validate(self):
         if self.status != Status.Removed:
