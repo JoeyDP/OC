@@ -1,0 +1,16 @@
+Beste professor {{ teacher.lastName }}
+
+
+
+{% for course in teacher.courses %}
+{{ course.name }}
+{% for change in course.changes %}
+ - {{ change }}
+{% else %}
+ - Geen wijzigingen
+{% endfor %}
+
+{% endfor %}
+
+Groetjes
+Joey

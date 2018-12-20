@@ -2,6 +2,7 @@
 from .year import *
 from .teacher import *
 from .dependency import Dependency
+from .status import Status
 
 
 BASE_HEIGHT = 0.25
@@ -14,14 +15,15 @@ class Course(object):
         self.name = name
         self.shortName = shortName
         self.teacher = teacher
-        teacher.addCourse(self)
+        if teacher:
+            teacher.addCourse(self)
         self.sp = sp
         self.spWork = spWork
         self.semester = semester
         semester.addCourse(self)
         self.dependsOn = dict()
         self.requiredFor = dict()
-        self.moved = False
+        self.status = Status.Normal
         self.changes = list()
 
     @property
@@ -38,7 +40,16 @@ class Course(object):
 
     @property
     def height(self):
-        return (BASE_HEIGHT + PADDING) * (self.sp / 3) - PADDING
+        h = (BASE_HEIGHT + PADDING) * (self.sp / 3) - PADDING
+        return max(h, 0.2)
+
+    @property
+    def isElectiveGroup(self):
+        return False
+
+    @property
+    def isElective(self):
+        return isinstance(self.semester, ElectiveGroup)
 
     def logChange(self, change: str):
         self.changes.append(change)
@@ -57,10 +68,8 @@ class Course(object):
     def getDependency(self, course):
         return self.dependsOn[course]
 
-    def getDependencies(self, absolute=False):
+    def getDependencies(self):
         values = self.dependsOn.values()
-        if absolute:
-            values = [v for v in values if not v.isRemoved()]
         return values
 
     def getDependants(self):
@@ -73,10 +82,47 @@ class Course(object):
     def moveTo(self, semester):
         if semester == self.semester:
             raise RuntimeError("Tried to move course to same semester")
+        self.logChange("Vak {} van {} naar {} verplaatst.".format(self.shortName, self.semester, semester))
         self.semester.removeCourse(self)
         self.semester = semester
         self.semester.addCourse(self)
-        self.moved = True
+        self.status = Status.Changed
+
+    def setSp(self, sp):
+        if self.sp == sp:
+            raise RuntimeError("Tried to set SP to same amount")
+
+        if self.sp < sp:
+            self.status = Status.New            # green for added SP
+            self.logChange("Aantal studiepunten van {} verminderd van {} naar {}.".format(self.shortName, self.sp, sp))
+        else:
+            self.status = Status.Reduced        # green for removed SP
+            self.logChange("Aantal studiepunten van {} verhoogd van {} naar {}.".format(self.shortName, self.sp, sp))
+        self.sp = sp
+
+    def remove(self):
+        self.status = Status.Removed
+
+    def hasChanges(self):
+        """ Is part of any change (both course and its dependencies). """
+        return len(self.changes) != 0
+
+    @property
+    def changed(self):
+        """ Is the course itself changed. """
+        return self.status == Status.Changed
+
+    @property
+    def new(self):
+        return self.status == Status.New
+
+    @property
+    def removed(self):
+        return self.status == Status.Removed
+
+    @property
+    def reduced(self):
+        return self.status == Status.Reduced
 
     def __str__(self):
         return self.name
@@ -89,6 +135,28 @@ class Course(object):
 
     def __le__(self, other):
         return self.semester <= other.semester
+
+
+class ElectiveGroup(Course):
+    def __init__(self, name, shortName, sp, semester):
+        super().__init__(name, shortName, sp, semester, None, spWork=0)
+        self._courses = list()
+
+    @property
+    def courses(self):
+        return self._courses
+
+    @property
+    def isElectiveGroup(self):
+        return True
+
+    def addCourse(self, course):
+        self.courses.append(course)
+        self.semester.addCourse(course)
+
+    def removeCourse(self, course):
+        self.courses.remove(course)
+        self.semester.removeCourse(course)
 
 
 # Year 1
@@ -129,6 +197,9 @@ SE = Course("Software Engineering", "SE", 6, year3.semester1, SERGE, spWork=3)
 TCS = Course("Telecommunicatiesystemen", "TCS", 6, year3.semester1, CHRIS_B, spWork=3)
 DS = Course("Gedistribueerde Systemen", "DS", 6, year3.semester1, STEVEN_L, spWork=3)
 AI = Course("Aritifical Intelligence", "AI", 6, year3.semester1, BART, spWork=3)
+KZVK1 = ElectiveGroup("Keuzevakken 1", "KZVK1", 3, year3.semester1)
+ECON = Course("Economie", "ECON", 3, KZVK1, JAN_BOUCKAERT, spWork=0)
+CT = Course("Codetheorie", "CT", 3, KZVK1, STIJN_S, spWork=2)
 
 # Semester 2
 COMP = Course("Compilers", "COMP", 6, year3.semester2, GUILLERMO_ALBERTO_PEREZ, spWork=3)
@@ -136,7 +207,11 @@ DSGA = Course("Datastructuren en Graafalgoritmen", "DSGA", 3, year3.semester2, B
 LBS = Course("Levensbeschouwing", "LBS", 3, year3.semester2, PATRICK_L, spWork=0)
 BAE = Course("Bachelor Eindwerk", "BAE", 12, year3.semester2, JAN_B, spWork=12)
 
-KZVK = Course("Keuzevakken", "KZVK", 6, year3.semester2, NNB, spWork=0)
+KZVK2 = ElectiveGroup("Keuzevakken 2", "KZVK2", 3, year3.semester2)
+CB = Course("Inleiding tot Computationele Biologie", "CB", 3, KZVK2, KRIS, spWork=2)
+INDP = Course("Individueel Project", "INDP", 6, KZVK2, ELS, spWork=3)
+TL = Course("Toegepaste Logica", "TL", 3, KZVK2, ELS, spWork=3)
+LCN = Course("Labo Computernetwerken", "LCN", 3, KZVK2, CHRIS_B, spWork=3)
 
 
 # =======================
@@ -231,3 +306,23 @@ BAE.addDependency(DS, soft=True)
 BAE.addDependency(AI, soft=True)
 BAE.addDependency(COMP, soft=True)
 
+# CT
+CT.addDependency(LA, soft=True)
+
+# ECON
+# /
+
+# INDP
+# /
+
+# CB
+CB.addDependency(IP)
+CB.addDependency(DW)
+CB.addDependency(CALC)
+CB.addDependency(LA)
+
+# LCN
+LCN.addDependency(CN)
+
+# TL
+TL.addDependency(MB)

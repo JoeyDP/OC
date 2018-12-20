@@ -1,13 +1,7 @@
 from functools import lru_cache
 
-from enum import Enum
 
-
-class Status(Enum):
-    Normal = 0
-    New = 1
-    Changed = 2
-    Removed = 3
+from .status import Status
 
 
 @lru_cache(maxsize=None)
@@ -52,6 +46,6 @@ class Dependency(object):
             if self.isSoft():
                 assert self.source.semester <= self.dest.semester, "{} should be before {}".format(self.source, self.dest)
             else:
-                assert self.source.year < self.dest.year, "{} should be before {}".format(self.source, self.dest)
+                assert self.source.semester < self.dest.semester, "{} should be before {}".format(self.source, self.dest)
 
 

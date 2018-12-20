@@ -1,4 +1,5 @@
 import os
+import shutil
 import bacli
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -37,7 +38,7 @@ def current(workload: bool=False):
     """ Generate the current program. """
     template = env.get_template('normal.dot')
     output = getOutputPath("current.dot")
-    render(template, output, title="Origineel", includeWorkload=workload)
+    renderDot(template, output, title="Origineel", includeWorkload=workload)
 
 
 @bacli.command
@@ -47,9 +48,9 @@ def solution(workload: bool=False):
 
     template = env.get_template('normal.dot')
     output = getOutputPath("solution_abs.dot")
-    render(template, output, title="Voortstel", includeWorkload=workload, absolute=True)
+    renderDot(template, output, title="Voorstel", includeWorkload=workload, absolute=True)
     output = getOutputPath("solution_rel.dot")
-    render(template, output, title="Voortstel (Relatief)", includeWorkload=workload, absolute=False)
+    renderDot(template, output, title="Voorstel (Relatief)", includeWorkload=workload, absolute=False)
 
 
 @bacli.command
@@ -62,16 +63,17 @@ def per_course(workload: bool=False):
             os.makedirs(getOutputPath(course.id), exist_ok=True)
             template = env.get_template('normal.dot')
             output = getOutputPath(os.path.join(course.id, "current.dot"))
-            render(template, output, title="Origineel {}".format(course.shortName), includeWorkload=workload, highlightCourse=course)
+            renderDot(template, output, title="Origineel ({} gehighlight)".format(course.shortName), includeWorkload=workload, highlightCourse=course)
 
         pbar.update()
         doSolution()
         for course in tqdm(courses):
             template = env.get_template('normal.dot')
             output = getOutputPath(os.path.join(course.id, "solution_abs.dot"))
-            render(template, output, title="Voortstel {}".format(course.shortName), includeWorkload=workload, absolute=True, highlightCourse=course)
+            renderDot(template, output, title="Voorstel ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=True, highlightCourse=course)
             output = getOutputPath(os.path.join(course.id, "solution_rel.dot"))
-            render(template, output, title="Voortstel {} (Relatief)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course)
+            renderDot(template, output, title="Voorstel Relatief ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course)
+
 
 
 @bacli.command
@@ -79,22 +81,38 @@ def per_teacher(workload: bool=False):
         with tqdm(total=2) as pbar:
             for teacher in tqdm(Teacher.all):
                 for course in tqdm(teacher.courses):
+                    # if not course.hasChanges():
+                    #     tqdm.write("Skipping {}".format(course))
+                    #     continue
                     outputPath = getOutputPath(os.path.join(teacher.fullName, course.id))
                     os.makedirs(outputPath, exist_ok=True)
                     template = env.get_template('normal.dot')
                     output = os.path.join(outputPath, "current.dot")
-                    render(template, output, title="Origineel {}".format(course.shortName), includeWorkload=workload, highlightCourse=course)
+                    renderDot(template, output, title="Origineel ({} gehighlight)".format(course.shortName), includeWorkload=workload, highlightCourse=course)
 
             pbar.update()
             doSolution()
             for teacher in tqdm(Teacher.all):
+                teacherPath = getOutputPath(teacher.fullName)
                 for course in tqdm(teacher.courses):
-                    outputPath = getOutputPath(os.path.join(teacher.fullName, course.id))
+                    outputPath = os.path.join(teacherPath, course.id)
+                    if not course.hasChanges():
+                        tqdm.write("No changes in {}".format(course))
+                        shutil.rmtree(outputPath)
+                        continue
                     template = env.get_template('normal.dot')
                     output = os.path.join(outputPath, "solution_abs.dot")
-                    render(template, output, title="Voortstel {}".format(course.shortName), includeWorkload=workload, absolute=True, highlightCourse=course)
+                    renderDot(template, output, title="Voorstel ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=True, highlightCourse=course)
                     output = os.path.join(outputPath, "solution_rel.dot")
-                    render(template, output, title="Voortstel {} (Relatief)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course)
+                    renderDot(template, output, title="Voorstel Relatief ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course)
+
+                if len(os.listdir(teacherPath)) == 0:
+                    tqdm.write("No changes for {}".format(teacher.fullName))
+                    os.rmdir(teacherPath)
+                else:
+                    template = env.get_template('email.txt')
+                    output = os.path.join(teacherPath, "email.txt")
+                    renderTemplate(template, output, teacher=teacher)
 
 
 @bacli.command
@@ -102,7 +120,19 @@ def legend():
     """ Generate the legend. """
     template = env.get_template('legend.dot')
     output = getOutputPath("legend.dot")
-    render(template, output, courses=getCourses())
+    renderDot(template, output, courses=getCourses())
+
+
+@bacli.command
+def changes(filter:str=None):
+    """ Print all changes in text format """
+    doSolution()
+    changes = set()
+    for course in getCourses():
+        if filter is None or course.id == filter:
+            changes.update(course.changes)
+    for change in changes:
+        print(change)
 
 
 def doSolution():
@@ -121,6 +151,9 @@ def doSolutionDep():
     # MB
     MB.addNewDependency(IP)
 
+    # LA
+    LA.addNewDependency(DW)
+
     # WP
     WP.getDependency(GP).remove()
 
@@ -137,9 +170,16 @@ def doSolutionDep():
 
     # AI
     AI.getDependency(AC).remove()
+    AI.addNewDependency(GAS)
 
     # DSGA
     DSGA.addNewDependency(AC, soft=True)
+    DSGA.addNewDependency(GAS)
+
+    # AC
+    AC.addNewDependency(MB)
+    AC.getDependency(GAS).remove()
+    AC.getDependency(TA).remove()
 
     # COMP
     COMP.addNewDependency(GP)
@@ -156,10 +196,21 @@ def doSolutionDep():
 def doSolutionCourses():
     # move courses
     US.moveTo(year2.semester2)
-    AC.moveTo(year2.semester1)
+    # AC.moveTo(year2.semester1)
 
     AI.moveTo(year2.semester1)
     AC.moveTo(year3.semester1)
+
+    DSGA.moveTo(year3.semester1)
+
+    # KZVK1.setSp(6)
+    # KZVK2.setSp(0)
+
+    CB.moveTo(KZVK1)
+    # LCN.moveTo(KZVK1)
+    # TL.moveTo(KZVK1)
+
+    WP.moveTo(year3.semester2)
 
 
 @bacli.command
@@ -196,9 +247,9 @@ def experiment(noWorkload: bool=False):
     # render
     template = env.get_template('normal.dot')
     output = getOutputPath("solution3_abs.dot")
-    render(template, output, includeWorkload=not noWorkload, absolute=True)
+    renderDot(template, output, includeWorkload=not noWorkload, absolute=True)
     output = getOutputPath("solution3_rel.dot")
-    render(template, output, includeWorkload=not noWorkload, absolute=False)
+    renderDot(template, output, includeWorkload=not noWorkload, absolute=False)
 
 
 def toPdf(inpath, outpath=None):
@@ -208,19 +259,20 @@ def toPdf(inpath, outpath=None):
     graph.write_pdf(outpath)
 
 
-def render(template, output, **kwargs):
+def renderTemplate(template, output, **kwargs):
+    with open(output, 'w') as f:
+        content = template.render(**kwargs)
+        f.write(content)
 
+
+def renderDot(template, output, **kwargs):
     templateArgs = {
         'years': YEARS,
         'teachers': Teacher.all,
         'absolute': True
     }
     templateArgs.update(kwargs)
-
-    with open(output, 'w') as f:
-        content = template.render(**templateArgs)
-        f.write(content)
-
+    renderTemplate(template, output, **templateArgs)
     toPdf(output)
 
 

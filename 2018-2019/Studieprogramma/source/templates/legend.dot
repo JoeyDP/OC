@@ -25,7 +25,7 @@ digraph {
     label = "Legende";
     key [label=<<table border="0" cellpadding="2" cellspacing="0" cellborder="0">
       <tr><td align="right" port="i1">Credit of MIN 8/20</td></tr>
-      <tr><td align="right" port="i2">Ingeschreven of Credit</td></tr>
+      <tr><td align="right" port="i2">Credit of ingeschreven</td></tr>
       <tr><td align="right" port="i3">Toegevoegd</td></tr>
       <tr><td align="right" port="i4">Verwijderd</td></tr>
       <tr><td align="right" port="i5">Gewijzigd</td></tr>

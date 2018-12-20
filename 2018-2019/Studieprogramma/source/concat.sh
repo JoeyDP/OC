@@ -7,7 +7,7 @@ for teacher in */ ; do
 	cd "$teacher"
 	for d in */ ; do
 		echo "	$d"
-		pdftk ${d}current.pdf ${d}solution_rel.pdf ${d}solution_abs.pdf ../legend.pdf cat output proposal_${d%/}.pdf
+		pdftk ${d}current.pdf ${d}solution_rel.pdf ${d}solution_abs.pdf ../legend.pdf cat output voorstel_${d%/}.pdf
 	done
 	cd ..
 done

@@ -23,6 +23,12 @@ class Year(CourseCollection):
     def id(self):
         return "ba{}".format(self.nr)
 
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.id
+
     def __lt__(self, other):
         return self.nr < other.nr
 
@@ -49,6 +55,12 @@ class Semester(CourseCollection):
     @property
     def id(self):
         return "sem{}".format(self.nr)
+
+    def __str__(self):
+        return "{} semester {}".format(str(self.year), self.nr)
+
+    def __repr__(self):
+        return self.year.id + self.id
 
     def __lt__(self, other):
         return self.year < other.year or self.nr < other.nr

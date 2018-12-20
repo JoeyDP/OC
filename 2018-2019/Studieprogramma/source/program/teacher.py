@@ -35,6 +35,9 @@ class Teacher(CourseCollection):
     def removeCourse(self, course):
         self.courses.remove(course)
 
+    def __str__(self):
+        return self.fullName
+
 
 # Teachers
 HANS = Teacher("Hans", "Vangheluwe")
