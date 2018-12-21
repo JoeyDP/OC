@@ -9,6 +9,8 @@ from tqdm import tqdm
 from program.course import *
 from program.year import *
 from program.teacher import *
+from program.simulator import Simulator
+
 
 env = Environment(
     loader=FileSystemLoader('templates/'),
@@ -135,6 +137,21 @@ def changes(filter:str=None):
         print(change)
 
 
+@bacli.command
+def simulate(failures: int = 1, solution: bool = False):
+    if solution:
+        doSolution()
+
+    courses = getCourses()
+    electives = [KZVK1, KZVK2]
+    electiveCredits = 0
+    for elective in electives:
+        courses.remove(elective)
+        electiveCredits += elective.sp
+    s = Simulator(YEARS, courses, electiveCredits)
+    s.simulate(nrFailures=failures)
+
+
 def doSolution():
     doSolutionDep()
     doSolutionCourses()
@@ -156,6 +173,7 @@ def doSolutionDep():
 
     # WP
     WP.getDependency(GP).remove()
+    WP.addNewDependency(IP)
 
     # SE
     SE.getDependency(IDBS).remove()
@@ -187,6 +205,10 @@ def doSolutionDep():
     COMP.getDependency(CSA).remove()
     COMP.getDependency(TA).remove()
     COMP.getDependency(GAS).remove()
+
+    # CB
+    CB.getDependency(LA).remove()
+    CB.getDependency(CALC).remove()
 
     # BAE
     BAE.getDependency(GP).setSoft(True)

@@ -1,8 +1,9 @@
-from .course_collection import CourseCollection
+from .course_collection import *
 
 
-class Year(CourseCollection):
+class Year(ICourseCollection):
     def __init__(self, nr):
+        super().__init__()
         self.nr = nr
         self.semester1 = Semester(1, self)
         self.semester2 = Semester(2, self)
@@ -38,19 +39,9 @@ class Year(CourseCollection):
 
 class Semester(CourseCollection):
     def __init__(self, nr, year):
+        super().__init__()
         self.nr = nr
         self.year = year
-        self._courses = list()
-
-    @property
-    def courses(self):
-        return self._courses
-
-    def addCourse(self, course):
-        self.courses.append(course)
-
-    def removeCourse(self, course):
-        self.courses.remove(course)
 
     @property
     def id(self):

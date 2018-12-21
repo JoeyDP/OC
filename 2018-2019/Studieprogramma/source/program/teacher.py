@@ -8,7 +8,6 @@ class Teacher(CourseCollection):
         super().__init__()
         self.firstName = firstName
         self.lastName = lastName
-        self._courses = list()
         Teacher.all.append(self)
 
     @property
@@ -24,16 +23,6 @@ class Teacher(CourseCollection):
     @property
     def fullName(self):
         return "{} {}".format(self.firstName, self.lastName)
-
-    @property
-    def courses(self):
-        return self._courses
-
-    def addCourse(self, course):
-        self.courses.append(course)
-
-    def removeCourse(self, course):
-        self.courses.remove(course)
 
     def __str__(self):
         return self.fullName
