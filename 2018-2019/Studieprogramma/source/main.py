@@ -77,44 +77,40 @@ def per_course(workload: bool=False):
             renderDot(template, output, title="Voorstel Relatief ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course)
 
 
-
 @bacli.command
 def per_teacher(workload: bool=False):
-        with tqdm(total=2) as pbar:
-            for teacher in tqdm(Teacher.all):
-                for course in tqdm(teacher.courses):
-                    # if not course.hasChanges():
-                    #     tqdm.write("Skipping {}".format(course))
-                    #     continue
-                    outputPath = getOutputPath(os.path.join(teacher.fullName, course.id))
-                    os.makedirs(outputPath, exist_ok=True)
-                    template = env.get_template('normal.dot')
-                    output = os.path.join(outputPath, "current.dot")
-                    renderDot(template, output, title="Origineel ({} gehighlight)".format(course.shortName), includeWorkload=workload, highlightCourse=course)
+    with tqdm(total=2) as pbar:
+        for teacher in tqdm(Teacher.all):
+            for course in tqdm(teacher.courses):
+                outputPath = getOutputPath(os.path.join(teacher.fullName, course.id))
+                os.makedirs(outputPath, exist_ok=True)
+                template = env.get_template('normal.dot')
+                output = os.path.join(outputPath, "current.dot")
+                renderDot(template, output, title="Origineel ({} gehighlight)".format(course.shortName), includeWorkload=workload, highlightCourse=course)
 
-            pbar.update()
-            doSolution()
-            for teacher in tqdm(Teacher.all):
-                teacherPath = getOutputPath(teacher.fullName)
-                for course in tqdm(teacher.courses):
-                    outputPath = os.path.join(teacherPath, course.id)
-                    if not course.hasChanges():
-                        tqdm.write("No changes in {}".format(course))
-                        shutil.rmtree(outputPath)
-                        continue
-                    template = env.get_template('normal.dot')
-                    output = os.path.join(outputPath, "solution_abs.dot")
-                    renderDot(template, output, title="Voorstel ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=True, highlightCourse=course)
-                    output = os.path.join(outputPath, "solution_rel.dot")
-                    renderDot(template, output, title="Voorstel Relatief ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course)
+        pbar.update()
+        doSolution()
+        for teacher in tqdm(Teacher.all):
+            teacherPath = getOutputPath(teacher.fullName)
+            for course in tqdm(teacher.courses):
+                outputPath = os.path.join(teacherPath, course.id)
+                if not course.hasChanges():
+                    tqdm.write("No changes in {}".format(course))
+                    shutil.rmtree(outputPath)
+                    continue
+                template = env.get_template('normal.dot')
+                output = os.path.join(outputPath, "solution_abs.dot")
+                renderDot(template, output, title="Voorstel ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=True, highlightCourse=course)
+                output = os.path.join(outputPath, "solution_rel.dot")
+                renderDot(template, output, title="Voorstel Relatief ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course)
 
-                if len(os.listdir(teacherPath)) == 0:
-                    tqdm.write("No changes for {}".format(teacher.fullName))
-                    os.rmdir(teacherPath)
-                else:
-                    template = env.get_template('email.txt')
-                    output = os.path.join(teacherPath, "email.txt")
-                    renderTemplate(template, output, teacher=teacher)
+            if len(os.listdir(teacherPath)) == 0:
+                tqdm.write("No changes for {}".format(teacher.fullName))
+                os.rmdir(teacherPath)
+            else:
+                template = env.get_template('email.txt')
+                output = os.path.join(teacherPath, "email.txt")
+                renderTemplate(template, output, teacher=teacher)
 
 
 @bacli.command

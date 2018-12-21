@@ -31,16 +31,16 @@ class ICourseCollection(object):
 
 
 class CourseCollection(ICourseCollection):
-    def __init__(self, items=None):
+    def __init__(self):
         super().__init__()
-        if items:
-            self._courses = list(items)
-        else:
-            self._courses = list()
+        self._courses = list()
 
     @property
     def courses(self):
         return self._courses
+
+    def __bool__(self):
+        return True
 
     def __contains__(self, item):
         return item in self.courses

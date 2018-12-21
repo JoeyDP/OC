@@ -70,7 +70,7 @@ class Simulator(object):
                 spDistribution.append(myCourses.spTotalAll)
                 for toFail in toFailset[:]:
                     if toFail in myCourses:
-                        print("Failing", toFail)
+                        # print("Failing", toFail)
                         myCourses.removeCourse(toFail)
                         if toFail.isElective:
                             electives.removeCourse(toFail)      # if it is an elective
@@ -83,15 +83,15 @@ class Simulator(object):
 
                 yearNr += 1
 
-            print(spDistribution)
-            print(creditsDistribution)
+            # print(spDistribution)
+            # print(creditsDistribution)
             totalCredits = 0
             for sp, c in zip(spDistribution, creditsDistribution):
                 totalCredits += c
                 if sp <= 36 and totalCredits < 150:
-                    print("\t\t !! Nearly underfilled bachelor and cannot start master !!")
+                    # print("\t\t !! Nearly underfilled bachelor and cannot start master !!")
                     badSet.append(scenario)
 
         print("Bottlenecks:")
         for scenario in badSet:
-            print("\t", scenario)
+            print(scenario)

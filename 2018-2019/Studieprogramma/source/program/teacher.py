@@ -27,6 +27,9 @@ class Teacher(CourseCollection):
     def __str__(self):
         return self.fullName
 
+    def __repr__(self):
+        return self.fullName
+
 
 # Teachers
 HANS = Teacher("Hans", "Vangheluwe")
