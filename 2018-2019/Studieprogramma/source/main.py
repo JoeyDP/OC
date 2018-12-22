@@ -187,7 +187,7 @@ def doSolutionDep():
     AI.addNewDependency(GAS)
 
     # DSGA
-    DSGA.addNewDependency(AC, soft=True)
+#    DSGA.addNewDependency(AC, soft=True)
     DSGA.addNewDependency(GAS)
 
     # AC

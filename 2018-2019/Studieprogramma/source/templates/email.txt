@@ -45,7 +45,7 @@ De grootste algemene wijzigingen die verklaard moeten worden, zijn de volgende:
 
 Naast deze 6 verplaatsingen werden er in totaal 16 dependencies verwijderd, 11 toegevoegd en 2 verzwakt. Dit zijn slechts 5 dependencies minder. De volgende punten werden behouden/verbeterd ten opzichte van de huidige situatie:
     - Voldoende moeilijke vakken vooraan in studieprogramma om toe te staan dat studenten vroeg ontdekken dat de studie te moeilijk is voor hun.
-    - Voldoende speling voor de studenten om de bacheloropleiding te kunnen spreiden (een jaar met minder dan 36 studiepunten is onder gevuld, maar 150SP van de bachelor moeten behaald zijn om te mogen combineren met de master)
+    - Voldoende speling voor de studenten om de bacheloropleiding te kunnen spreiden (een jaar met minder dan 36 studiepunten is onder gevuld, maar 150SP van de bachelor moeten behaald zijn om te mogen combineren met de master).
     - Betere balans tussen de semesters.
     - Betere balans in werklast over de jaren en semesters.
     - Voldoende volgtijdelijkheden om te voorkomen dat studenten moeilijke vakken kunnen “laten liggen” tot het einde van hun opleiding. (Dit mitigeert grotendeels de potentieel negatieve gevolgen van de nieuwe regel dat vakken niet meer verplicht opnieuw moeten opgenomen worden.)
