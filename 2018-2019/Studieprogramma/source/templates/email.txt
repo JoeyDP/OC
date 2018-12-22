@@ -13,7 +13,7 @@ Gelukkig kunnen beide problemen opgelost worden door het herzien van de volgtijd
 
 Dit voorstel werd bekomen door voor elk vak de volgtijdelijkheid te bekijken met het volgende idee: "Welke kennis is essentieel nodig om aan dit vak te kunnen beginnen?" Er werd dus geen rekening gehouden met subjectieve factoren als de moeilijkheidsgraad van de vakken ("Als een student van A niet kan, zal hij/zij vak B ook niet kunnen.")
 
-Het voorstel kan u terugvinden in de bijlage. Voor elk van uw vakken waar een wijziging in gebeurd is, werd een overzicht gegenereerd met eerst de huidige situatie, vervolgens de wijzigingen met kleurcode en zonder, en ten slotte een legende. De visualisatie geeft de drie bachelorjaren weer met de vakken per semester opgedeeld. Meer details kan u terugvinden in de legende.
+Het voorstel kan u terugvinden in de bijlage. Voor elk van uw vakken waar een wijziging in gebeurd is, werd een overzicht gegenereerd met eerst de huidige situatie, vervolgens de wijzigingen relatief en absoluut (met en zonder kleurcode) en ten slotte een legende. De visualisatie geeft de drie bachelorjaren weer met de vakken per semester opgedeeld. Meer details kan u terugvinden in de legende.
 
 Voor uw vakken worden de volgende wijzigingen voorgesteld:
 {% for course in teacher.courses %}
@@ -45,9 +45,9 @@ De grootste algemene wijzigingen die verklaard moeten worden, zijn de volgende:
 
 Naast deze 6 verplaatsingen werden er in totaal 16 dependencies verwijderd, 11 toegevoegd en 2 verzwakt. Dit zijn slechts 5 dependencies minder. De volgende punten werden behouden/verbeterd ten opzichte van de huidige situatie:
     - Voldoende moeilijke vakken vooraan in studieprogramma om toe te staan dat studenten vroeg ontdekken dat de studie te moeilijk is voor hun.
-    - Voldoende speling laten voor studenten om de bachelor te spreiden (een jaar met minder dan 36 studiepunten is onder gevuld, maar 150SP van de bachelor moeten behaald zijn om te mogen combineren met de master)
-    - Betere balans tussen semesters.
-    - Betere balans in werklast over jaren en semesters.
+    - Voldoende speling voor de studenten om de bacheloropleiding te kunnen spreiden (een jaar met minder dan 36 studiepunten is onder gevuld, maar 150SP van de bachelor moeten behaald zijn om te mogen combineren met de master)
+    - Betere balans tussen de semesters.
+    - Betere balans in werklast over de jaren en semesters.
     - Voldoende volgtijdelijkheden om te voorkomen dat studenten moeilijke vakken kunnen “laten liggen” tot het einde van hun opleiding. (Dit mitigeert grotendeels de potentieel negatieve gevolgen van de nieuwe regel dat vakken niet meer verplicht opnieuw moeten opgenomen worden.)
 
 Om deze aanzienlijke verbetering te staven, heb ik een simulatie uitgevoerd waar de gevolgen van 2, 3 of 4 vakken falen berekend worden. Hieruit blijkt dat de volgtijdelijkheid veel beter gebalanceerd is in het voorstel. De voornaamste redenen hiervoor zijn minder bottlenecks en een betere doorstroom omdat studenten niet overdreven afgestraft worden voor het maken van een fout in hun eerste jaar). De details van deze simulatie kan u vinden in het bijgevoegde document "simulatie".

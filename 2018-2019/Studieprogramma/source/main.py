@@ -106,11 +106,11 @@ def per_teacher(workload: bool=False):
 
             if len(os.listdir(teacherPath)) == 0:
                 tqdm.write("No changes for {}".format(teacher.fullName))
-                os.rmdir(teacherPath)
-            else:
-                template = env.get_template('email.txt')
-                output = os.path.join(teacherPath, "email.txt")
-                renderTemplate(template, output, teacher=teacher)
+                # os.rmdir(teacherPath)
+            # else:
+            template = env.get_template('email.txt')
+            output = os.path.join(teacherPath, "email.txt")
+            renderTemplate(template, output, teacher=teacher)
 
 
 @bacli.command

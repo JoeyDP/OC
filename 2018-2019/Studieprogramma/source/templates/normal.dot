@@ -26,7 +26,7 @@ digraph Studieprogramma{
 
         {% for semester in year.semesters %}
             {% for course in semester.courses %}
-                {% if absolute or highlightCourse and not highlightCourse == course %}
+                {% if absolute %}
                     {% set color = "white" %}
                 {%  elif course.changed %}
                     {% set color = "cornflowerblue" %}
@@ -68,7 +68,7 @@ digraph Studieprogramma{
                 edge	[constraint=true, style=invis];
 
                 {% for course in electiveGroup.courses %}
-                    {% if absolute or highlightCourse and not highlightCourse == course %}
+                    {% if absolute %}
                         {% set color = "white" %}
                     {%  elif course.changed %}
                         {% set color = "cornflowerblue" %}
