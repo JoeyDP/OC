@@ -1,5 +1,6 @@
 import os
 import shutil
+from collections import defaultdict
 import bacli
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -131,6 +132,50 @@ def changes(filter:str=None):
             changes.update(course.changes)
     for change in changes:
         print(change)
+
+
+@bacli.command
+def overview(workload: bool = False, all: bool = False):
+    current(workload=workload)
+    solution(workload=workload)
+    legend()
+
+    mandatory = list()
+    electives = list()
+    for c in getCourses():
+        if c.isElectiveGroup:
+            continue
+        elif c.isElective:
+            electives.append(c)
+        else:
+            mandatory.append(c)
+    courses = mandatory + electives
+
+    changesMap = defaultdict(list)
+    for course in getCourses():
+        for change in course.changes:
+            if "verplaatst" in change:
+                continue
+            if "naar {}".format(course.shortName) in change:
+                changesMap[course].append(change)
+
+    template = env.get_template('overview.tex')
+    output = getOutputPath("overview.tex")
+    renderTemplate(template, output, courses=courses, changesMap=changesMap)
+
+    if all:
+        outputPath = getOutputPath("Overview")
+        os.makedirs(outputPath, exist_ok=True)
+
+        for course in tqdm(courses):
+            template = env.get_template('normal.dot')
+            output = os.path.join(outputPath, "{}_solution_rel.dot".format(course.id))
+            renderDot(template, output,
+                      title="Voorstel Relatief ({} gehighlight)".format(course.shortName),
+                      includeWorkload=workload,
+                      absolute=False,
+                      highlightCourse=course
+                      )
 
 
 @bacli.command

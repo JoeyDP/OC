@@ -3,7 +3,6 @@ digraph Studieprogramma{
 	graph [ranksep="6", nodesep="0.2" splines=true, concentrate=false];
 	edge [constraint=false];
 
-
     labelloc="t";
     label=<<FONT POINT-SIZE="50">{{ title }}</FONT>>;
 
@@ -44,7 +43,11 @@ digraph Studieprogramma{
                 {% elif course.isElectiveGroup %}
                     {{ course.id }} [label="{{ course.shortName }}", style="filled, dashed" height={{ course.height }}, fillcolor={{ color }}, color=black];
                 {% elif not course.isElective %}
-                    {{ course.id }} [label="{{ course.shortName }}", height={{ course.height }}, color={{ color }}, fillcolor={{ color }}];
+                    {% if highlightCourse == course %}
+                        {{ course.id }} [label="{{ course.shortName }}", style="filled, bold" height={{ course.height }}, color=black, fillcolor={{ color }}];
+                    {% else %}
+                        {{ course.id }} [label="{{ course.shortName }}", height={{ course.height }}, color={{ color }}, fillcolor={{ color }}];
+                    {% endif %}
                 {% endif %}
             {% endfor %}
 
@@ -84,7 +87,11 @@ digraph Studieprogramma{
                     {% if course.removed and (absolute or highlightCourse and not highlightCourse == course) %}
                         # {{ course.id }} removed
                     {% else %}
-                        {{ course.id }} [label="{{ course.shortName }}", height={{ course.height }}, color={{ color }}, fillcolor={{ color }}];
+                        {% if highlightCourse == course %}
+                            {{ course.id }} [label="{{ course.shortName }}", style="filled, bold" height={{ course.height }}, color=black, fillcolor={{ color }}];
+                        {% else %}
+                            {{ course.id }} [label="{{ course.shortName }}", height={{ course.height }}, color={{ color }}, fillcolor={{ color }}];
+                        {% endif %}
                         {{ electiveGroup.id }} -> {{ course.id }};
                     {% endif %}
                 {% endfor %}
