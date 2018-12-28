@@ -237,7 +237,7 @@ def doSolutionDep():
 
     # AC
     AC.addNewDependency(MB)
-    AC.getDependency(GAS).remove()
+#    AC.getDependency(GAS).remove()
     AC.getDependency(TA).remove()
 
     # COMP
