@@ -225,19 +225,21 @@ def doSolutionDep():
 
     # DS
     DS.getDependency(GP).remove()
-    DS.addNewDependency(IDBS)
+    # DS.addNewDependency(IDBS)                 # to move DS to year 2
+    DS.getDependency(US).remove()               # to move DS to year 2
+    DS.addNewDependency(CSA)
 
     # AI
     AI.getDependency(AC).remove()
     AI.addNewDependency(GAS)
 
     # DSGA
-#    DSGA.addNewDependency(AC, soft=True)
+#    DSGA.addNewDependency(AC, soft=True)       # Benny
     DSGA.addNewDependency(GAS)
 
     # AC
     AC.addNewDependency(MB)
-    AC.getDependency(GAS).remove()
+    # AC.getDependency(GAS).remove()            # Floris & Studenten (Laurens)
     AC.getDependency(TA).remove()
 
     # COMP
@@ -259,19 +261,13 @@ def doSolutionDep():
 def doSolutionCourses():
     # move courses
     US.moveTo(year2.semester2)
-    # AC.moveTo(year2.semester1)
 
-    AI.moveTo(year2.semester1)
+    DS.moveTo(year2.semester1)                  # Studenten (Laurens)
     AC.moveTo(year3.semester1)
 
     DSGA.moveTo(year3.semester1)
 
-    # KZVK1.setSp(6)
-    # KZVK2.setSp(0)
-
     CB.moveTo(KZVK1)
-    # LCN.moveTo(KZVK1)
-    # TL.moveTo(KZVK1)
 
     WP.moveTo(year3.semester2)
 

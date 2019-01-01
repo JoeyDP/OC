@@ -37,8 +37,8 @@ De grootste algemene wijzigingen die verklaard moeten worden, zijn de volgende:
     - WP van Ba 3 semester 1 naar Ba 3 semester 2 verplaatst.
         -> Dit betreft een semesterwijziging binnen hetzelfde jaar. Er moet geen overgangsmaatregel zijn.
 
-    - AI van Ba 3 semester 1 naar Ba 2 semester 1 verplaatst.
-        -> Jaarwijziging, maar geen semesterwijziging. 2de bachelor studenten kunnen hun oorspronkelijke studieprogramma volgen en AI opnemen in hun derde jaar. 1ste bachelor studenten nemen AI op in hun 2de jaar. Dit heeft als effect dat er 1 overgangsjaar is met meer studenten.
+    - DS van Ba 3 semester 1 naar Ba 2 semester 1 verplaatst.
+        -> Jaarwijziging, maar geen semesterwijziging. 2de bachelor studenten kunnen hun oorspronkelijke studieprogramma volgen en DS opnemen in hun derde jaar. 1ste bachelor studenten nemen DS op in hun 2de jaar. Dit heeft als effect dat er 1 overgangsjaar is met meer studenten.
 
     - A&C van Ba 2 semester 2 naar Ba 3 semester 1 verplaatst.
         -> Jaar- EN semesterwijziging. Als het vak naar voor werd geplaatst, zou het twee keer gegeven moeten worden. In dit geval wordt het vak gelukkig naar Ba3 gepusht waardoor er 1 overgangsjaar is met minder/geen studenten.

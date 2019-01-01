@@ -37,7 +37,7 @@ class Year(ICourseCollection):
         return self.nr <= other.nr
 
 
-class Semester(CourseCollection):
+class Semester(CourseList):
     def __init__(self, nr, year):
         super().__init__()
         self.nr = nr

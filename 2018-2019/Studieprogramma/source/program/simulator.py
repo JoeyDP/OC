@@ -2,7 +2,7 @@ import itertools
 
 from .year import *
 from .course import *
-from .course_collection import CourseCollection
+from .course_collection import CourseSet
 
 
 def dependenciesMet(course, credits):
@@ -32,8 +32,8 @@ class Simulator(object):
         badSet = list()
         for scenario in scenarios:
             toFailset = list(scenario)
-            credits = CourseCollection()
-            electives = CourseCollection()
+            credits = CourseSet()
+            electives = CourseSet()
             yearNr = 1
             spDistribution = list()
             creditsDistribution = list()
@@ -41,7 +41,7 @@ class Simulator(object):
                 # print("Year {}".format(str(yearNr)))
                 # print("Done", credits)
                 # print("Credits", credits.spTotalAll)
-                myCourses = CourseCollection()
+                myCourses = CourseList()
                 for course in self.courses:
                     # print(course)
                     if course in credits:

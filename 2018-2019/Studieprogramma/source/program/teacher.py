@@ -1,7 +1,7 @@
-from .course_collection import CourseCollection
+from .course_collection import CourseList
 
 
-class Teacher(CourseCollection):
+class Teacher(CourseList):
     all = list()
 
     def __init__(self, firstName, lastName):
