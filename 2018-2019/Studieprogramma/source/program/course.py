@@ -94,10 +94,10 @@ class Course(object):
 
         if self.sp < sp:
             self.status = Status.New            # green for added SP
-            self.logChange("Aantal studiepunten van {} verminderd van {} naar {}.".format(self.shortName, self.sp, sp))
+            self.logChange("Aantal studiepunten van {} verhoogd van {} naar {}.".format(self.shortName, self.sp, sp))
         else:
             self.status = Status.Reduced        # green for removed SP
-            self.logChange("Aantal studiepunten van {} verhoogd van {} naar {}.".format(self.shortName, self.sp, sp))
+            self.logChange("Aantal studiepunten van {} verminderd van {} naar {}.".format(self.shortName, self.sp, sp))
         self.sp = sp
 
     def remove(self):

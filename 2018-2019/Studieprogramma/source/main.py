@@ -158,6 +158,8 @@ def overview(workload: bool = False, all: bool = False):
                 continue
             if "naar {}".format(course.shortName) in change:
                 changesMap[course].append(change)
+            # elif "studiepunten van {}".format(course.shortName) in change:
+            #     changesMap[course].append(change)
 
     template = env.get_template('overview.tex')
     output = getOutputPath("overview.tex")
@@ -265,11 +267,19 @@ def doSolutionCourses():
     DS.moveTo(year2.semester1)                  # Studenten (Laurens)
     AC.moveTo(year3.semester1)
 
-    DSGA.moveTo(year3.semester1)
+    # DSGA.moveTo(year3.semester1)
 
-    CB.moveTo(KZVK1)
+    # CB.moveTo(KZVK1)
 
-    WP.moveTo(year3.semester2)
+    # WP.moveTo(year3.semester2)
+
+
+    # Voorstel Benny
+    COMP.moveTo(year2.semester2)
+    FYS.moveTo(KZVK2)
+    # WP.moveTo(year3.semester2)
+    DSGA.setSp(6)
+    KZVK2.setSp(6)
 
 
 @bacli.command
