@@ -6,7 +6,7 @@ digraph {
     label = "Cursussen";
     courses [label=<<table border="0" cellpadding="5" cellspacing="0" cellborder="0">
     {% for course in courses %}
-      <tr><td align="left" port="i1">{{ course.shortName }}</td><td align="left">{{ course.name }}</td></tr>
+      <tr><td align="left" port="i1">{{ course._shortName }}</td><td align="left">{{ course.name }}</td></tr>
     {% endfor %}
       </table>>]
     key3 [label=<<table border="0" cellpadding="2" cellspacing="0" cellborder="0">

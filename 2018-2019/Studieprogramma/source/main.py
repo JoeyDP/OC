@@ -7,6 +7,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 import pydot
 from tqdm import tqdm
 
+import program.course
 from program.course import *
 from program.year import *
 from program.teacher import *
@@ -37,28 +38,34 @@ def getOutputPath(filename):
 
 
 @bacli.command
-def current(workload: bool=False):
+def current(workload: bool=False, fullnames: bool = False):
     """ Generate the current program. """
+    program.course.FULL_NAMES = fullnames
+
     template = env.get_template('normal.dot')
     output = getOutputPath("current.dot")
-    renderDot(template, output, title="Origineel", includeWorkload=workload)
+    renderDot(template, output, title="Origineel", includeWorkload=workload, fullnames=fullnames)
 
 
 @bacli.command
-def solution(workload: bool=False):
+def solution(workload: bool=False, fullnames: bool = False):
     """ Generate solution 1 with absolute and relative visualization. """
+    program.course.FULL_NAMES = fullnames
+
     doSolution()
 
     template = env.get_template('normal.dot')
     output = getOutputPath("solution_abs.dot")
-    renderDot(template, output, title="Voorstel", includeWorkload=workload, absolute=True)
+    renderDot(template, output, title="Voorstel", includeWorkload=workload, absolute=True, fullnames=fullnames)
     output = getOutputPath("solution_rel.dot")
-    renderDot(template, output, title="Voorstel (Relatief)", includeWorkload=workload, absolute=False)
+    renderDot(template, output, title="Voorstel (Relatief)", includeWorkload=workload, absolute=False, fullnames=fullnames)
 
 
 @bacli.command
-def per_course(workload: bool=False):
+def per_course(workload: bool=False, fullnames: bool = False):
     """ Generate solution 1 per course (with highlighting). """
+    program.course.FULL_NAMES = fullnames
+
     courses = getCourses()
 
     with tqdm(total=2) as pbar:
@@ -66,20 +73,22 @@ def per_course(workload: bool=False):
             os.makedirs(getOutputPath(course.id), exist_ok=True)
             template = env.get_template('normal.dot')
             output = getOutputPath(os.path.join(course.id, "current.dot"))
-            renderDot(template, output, title="Origineel ({} gehighlight)".format(course.shortName), includeWorkload=workload, highlightCourse=course)
+            renderDot(template, output, title="Origineel ({} gehighlight)".format(course.shortName), includeWorkload=workload, highlightCourse=course, fullnames=fullnames)
 
         pbar.update()
         doSolution()
         for course in tqdm(courses):
             template = env.get_template('normal.dot')
             output = getOutputPath(os.path.join(course.id, "solution_abs.dot"))
-            renderDot(template, output, title="Voorstel ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=True, highlightCourse=course)
+            renderDot(template, output, title="Voorstel ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=True, highlightCourse=course, fullnames=fullnames)
             output = getOutputPath(os.path.join(course.id, "solution_rel.dot"))
-            renderDot(template, output, title="Voorstel Relatief ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course)
+            renderDot(template, output, title="Voorstel Relatief ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course, fullnames=fullnames)
 
 
 @bacli.command
-def per_teacher(workload: bool=False):
+def per_teacher(workload: bool=False, fullnames: bool = False):
+    program.course.FULL_NAMES = fullnames
+
     with tqdm(total=2) as pbar:
         for teacher in tqdm(Teacher.all):
             for course in tqdm(teacher.courses):
@@ -87,7 +96,7 @@ def per_teacher(workload: bool=False):
                 os.makedirs(outputPath, exist_ok=True)
                 template = env.get_template('normal.dot')
                 output = os.path.join(outputPath, "current.dot")
-                renderDot(template, output, title="Origineel ({} gehighlight)".format(course.shortName), includeWorkload=workload, highlightCourse=course)
+                renderDot(template, output, title="Origineel ({} gehighlight)".format(course.shortName), includeWorkload=workload, highlightCourse=course, fullnames=fullnames)
 
         pbar.update()
         doSolution()
@@ -101,9 +110,9 @@ def per_teacher(workload: bool=False):
                     continue
                 template = env.get_template('normal.dot')
                 output = os.path.join(outputPath, "solution_abs.dot")
-                renderDot(template, output, title="Voorstel ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=True, highlightCourse=course)
+                renderDot(template, output, title="Voorstel ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=True, highlightCourse=course, fullnames=fullnames)
                 output = os.path.join(outputPath, "solution_rel.dot")
-                renderDot(template, output, title="Voorstel Relatief ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course)
+                renderDot(template, output, title="Voorstel Relatief ({} gehighlight)".format(course.shortName), includeWorkload=workload, absolute=False, highlightCourse=course, fullnames=fullnames)
 
             if len(os.listdir(teacherPath)) == 0:
                 tqdm.write("No changes for {}".format(teacher.fullName))
@@ -135,9 +144,11 @@ def changes(filter:str=None):
 
 
 @bacli.command
-def overview(workload: bool = False, all: bool = False):
-    current(workload=workload)
-    solution(workload=workload)
+def overview(workload: bool = False, all: bool = False, fullnames: bool = False):
+    program.course.FULL_NAMES = fullnames
+
+    current(workload=workload, fullnames=fullnames)
+    solution(workload=workload, fullnames=fullnames)
     legend()
 
     mandatory = list()
@@ -176,6 +187,7 @@ def overview(workload: bool = False, all: bool = False):
                       title="Voorstel Relatief ({} gehighlight)".format(course.shortName),
                       includeWorkload=workload,
                       absolute=False,
+                      fullnames=fullnames,
                       highlightCourse=course
                       )
 
@@ -214,6 +226,9 @@ def doSolutionDep():
     # LA
     LA.addNewDependency(DW)
 
+    # PPD
+    PPD.addNewDependency(PSE, soft=True)
+
     # WP
     WP.getDependency(GP).remove()
     WP.addNewDependency(IP)
@@ -226,7 +241,7 @@ def doSolutionDep():
     SE.addNewDependency(PSE)
 
     # DS
-    DS.getDependency(GP).remove()
+    DS.getDependency(GP).remove()               # to move DS to year 2
     # DS.addNewDependency(IDBS)                 # to move DS to year 2
     DS.getDependency(US).remove()               # to move DS to year 2
     DS.addNewDependency(CSA)
@@ -245,10 +260,10 @@ def doSolutionDep():
     AC.getDependency(TA).remove()
 
     # COMP
-    COMP.addNewDependency(GP)
-    COMP.addNewDependency(MB)
+    COMP.addNewDependency(GP, soft=True)
+    COMP.addNewDependency(MB, soft=True)
     COMP.getDependency(CSA).remove()
-    COMP.getDependency(TA).remove()
+    # COMP.getDependency(TA).remove()
     COMP.getDependency(GAS).remove()
 
     # CB
@@ -265,19 +280,16 @@ def doSolutionCourses():
     US.moveTo(year2.semester2)
 
     DS.moveTo(year2.semester1)                  # Studenten (Laurens)
+    # SE.moveTo(year2.semester1)
+    # AI.moveTo(year2.semester1)
+
     AC.moveTo(year3.semester1)
 
     # DSGA.moveTo(year3.semester1)
 
-    # CB.moveTo(KZVK1)
-
-    # WP.moveTo(year3.semester2)
-
-
     # Voorstel Benny
     COMP.moveTo(year2.semester2)
     FYS.moveTo(KZVK2)
-    # WP.moveTo(year3.semester2)
     DSGA.setSp(6)
     KZVK2.setSp(6)
 

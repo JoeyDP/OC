@@ -91,6 +91,7 @@ class Simulator(object):
                 if sp <= 36 and totalCredits < 150:
                     # print("\t\t !! Nearly underfilled bachelor and cannot start master !!")
                     badSet.append(scenario)
+                    break
 
         print("Bottlenecks:")
         for scenario in badSet:

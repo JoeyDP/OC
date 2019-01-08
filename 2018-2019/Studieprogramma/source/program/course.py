@@ -4,16 +4,16 @@ from .teacher import *
 from .dependency import Dependency
 from .status import Status
 
-
 BASE_HEIGHT = 0.25
 PADDING = 0.2
+FULL_NAMES = False
 
 
 class Course(object):
     def __init__(self, name, shortName, sp, semester, teacher, spWork=0):
         assert spWork <= sp
         self.name = name
-        self.shortName = shortName
+        self._shortName = shortName
         self.teacher = teacher
         if teacher:
             teacher.addCourse(self)
@@ -27,8 +27,15 @@ class Course(object):
         self.changes = list()
 
     @property
+    def shortName(self):
+        if FULL_NAMES:
+            return self.name
+        else:
+            return self._shortName
+
+    @property
     def id(self):
-        return self.shortName.replace('&', '')
+        return self._shortName.replace('&', '')
 
     @property
     def year(self):
@@ -60,7 +67,7 @@ class Course(object):
         return d
 
     def addNewDependency(self, course, soft=False):
-        change = "Nieuwe dependency toegevoegd van {} naar {}.".format(course.shortName, self.shortName)
+        change = "Nieuwe dependency toegevoegd van {} naar {}.".format(course.shortName, self._shortName)
         self.logChange(change)
         course.logChange(change)
         return self.addDependency(course, soft=soft, new=True)
@@ -82,7 +89,7 @@ class Course(object):
     def moveTo(self, semester):
         if semester == self.semester:
             raise RuntimeError("Tried to move course to same semester")
-        self.logChange("Vak {} van {} naar {} verplaatst.".format(self.shortName, self.semester, semester))
+        self.logChange("Vak {} van {} naar {} verplaatst.".format(self._shortName, self.semester, semester))
         self.semester.removeCourse(self)
         self.semester = semester
         self.semester.addCourse(self)
@@ -94,10 +101,10 @@ class Course(object):
 
         if self.sp < sp:
             self.status = Status.New            # green for added SP
-            self.logChange("Aantal studiepunten van {} verhoogd van {} naar {}.".format(self.shortName, self.sp, sp))
+            self.logChange("Aantal studiepunten van {} verhoogd van {} naar {}.".format(self._shortName, self.sp, sp))
         else:
             self.status = Status.Reduced        # green for removed SP
-            self.logChange("Aantal studiepunten van {} verminderd van {} naar {}.".format(self.shortName, self.sp, sp))
+            self.logChange("Aantal studiepunten van {} verminderd van {} naar {}.".format(self._shortName, self.sp, sp))
         self.sp = sp
 
     def remove(self):
@@ -128,7 +135,7 @@ class Course(object):
         return self.name
 
     def __repr__(self):
-        return self.shortName
+        return self._shortName
 
     def __lt__(self, other):
         return self.semester < other.semester
