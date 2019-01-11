@@ -1,0 +1,41 @@
+Nieuwe dependency toegevoegd van M&B naar COMP.
+Nieuwe dependency toegevoegd van IP naar WP.
+Vak CB van Keuzevakken 2 naar Keuzevakken 1 verplaatst.
+Dependency van IDBS naar SE verwijderd.
+Nieuwe dependency toegevoegd van DW naar LA.
+Dependency van PPD naar SE verwijderd.
+Dependency van CALC naar CB verwijderd.
+Dependency van GP naar DS verwijderd.
+Dependency van PSE naar GP verwijderd.
+Nieuwe dependency toegevoegd van A&C naar DSGA.
+Nieuwe dependency toegevoegd van IDBS naar DS.
+Dependency van GP naar WP verwijderd.
+Vak A&C van Ba 2 semester 2 naar Ba 3 semester 1 verplaatst.
+Dependency van CSA naar COMP verwijderd.
+Dependency van PPD naar BAE verzwakt.
+Nieuwe dependency toegevoegd van PSE naar SE.
+Dependency van CG naar GP verwijderd.
+Nieuwe dependency toegevoegd van M&B naar A&C.
+Vak US van Ba 2 semester 1 naar Ba 2 semester 2 verplaatst.
+Vak DSGA van Ba 3 semester 2 naar Ba 3 semester 1 verplaatst.
+Nieuwe dependency toegevoegd van GP naar COMP.
+Dependency van GAS naar COMP verwijderd.
+Nieuwe dependency toegevoegd van GAS naar AI.
+Dependency van LA naar CB verwijderd.
+Dependency van T&A naar COMP verwijderd.
+Nieuwe dependency toegevoegd van IP naar M&B.
+Vak WP van Ba 3 semester 1 naar Ba 3 semester 2 verplaatst.
+Dependency van GAS naar A&C verwijderd.
+Dependency van GP naar BAE verzwakt.
+Dependency van T&A naar SE verwijderd.
+Dependency van GAS naar SE verwijderd.
+Nieuwe dependency toegevoegd van GAS naar DSGA.
+Dependency van T&A naar A&C verwijderd.
+Dependency van A&C naar AI verwijderd.
+Vak AI van Ba 3 semester 1 naar Ba 2 semester 1 verplaatst.
+
+
+16 verwijderd
+11 toegevoegd
+2 verzwakt
+6 verplaatst

@@ -1,0 +1,212 @@
+digraph Studieprogramma{
+	node [shape="rect", pin=true, style=filled, fillcolor=white, color=white, height=0.7, fixedsize=true];
+	graph [ranksep="6", nodesep="0.2" splines=true, concentrate=false];
+	edge [constraint=false];
+
+
+    labelloc="t";
+    label=<<FONT POINT-SIZE="50">Voorstel</FONT>>;
+
+    fontsize=25
+
+	/*
+	3 SP = 0.25
+	6 SP = 0.7
+	9 SP = 1.15
+	12 SP = 1.6
+	*/
+
+	rankdir="LR"
+
+	subgraph cluster_ba1{
+		label = "Ba 1"
+		style=filled;
+		color=lightgrey;
+
+                    IP [label="IP", height=1.1500000000000001, color=white, fillcolor=white];
+                    DW [label="DW", height=1.1500000000000001, color=white, fillcolor=white];
+                    CSA [label="CSA", height=1.1500000000000001, color=white, fillcolor=white];
+                    GAS [label="GAS", height=0.7, color=white, fillcolor=white];
+
+            	ba1_sem1_ratio [height=0.25, style=striped, color=black, fillcolor="forestgreen;0.36363636363636365:orange", label="12       21"]
+
+                ba1_sem [height=0, fixedsize=true, label="", color=black];
+                    TA [label="T&amp;A", height=0.7, color=white, fillcolor=white];
+                    PSE [label="PSE", height=0.7, color=white, fillcolor=white];
+                    CALC [label="CALC", height=1.1500000000000001, color=white, fillcolor=white];
+                    CG [label="CG", height=0.7, color=white, fillcolor=white];
+
+            	ba1_sem2_ratio [height=0.25, style=striped, color=black, fillcolor="forestgreen;0.4444444444444444:orange", label="12       15"]
+
+	}
+	subgraph cluster_ba2{
+		label = "Ba 2"
+		style=filled;
+		color=lightgrey;
+
+                    GP [label="GP", height=0.7, color=white, fillcolor=white];
+                    MB [label="M&amp;B", height=0.7, color=white, fillcolor=white];
+                    IDBS [label="IDBS", height=0.7, color=white, fillcolor=white];
+                    LA [label="LA", height=0.7, color=white, fillcolor=white];
+                    AI [label="AI", height=0.7, color=white, fillcolor=white];
+
+            	ba2_sem1_ratio [height=0.25, style=striped, color=black, fillcolor="forestgreen;0.26666666666666666:orange", label="8        22"]
+
+                ba2_sem [height=0, fixedsize=true, label="", color=black];
+                    PPD [label="PPD", height=0.7, color=white, fillcolor=white];
+                    CN [label="CN", height=0.7, color=white, fillcolor=white];
+                    FYS [label="FYS", height=0.7, color=white, fillcolor=white];
+                    NA [label="NA", height=0.25, color=white, fillcolor=white];
+                    ES [label="ES", height=0.25, color=white, fillcolor=white];
+                    US [label="US", height=0.7, color=white, fillcolor=white];
+
+            	ba2_sem2_ratio [height=0.25, style=striped, color=black, fillcolor="forestgreen;0.23333333333333334:orange", label="7        23"]
+
+	}
+	subgraph cluster_ba3{
+		label = "Ba 3"
+		style=filled;
+		color=lightgrey;
+
+                    SE [label="SE", height=0.7, color=white, fillcolor=white];
+                    TCS [label="TCS", height=0.7, color=white, fillcolor=white];
+                    DS [label="DS", height=0.7, color=white, fillcolor=white];
+                    KZVK1 [label="KZVK1", style="filled, dashed" height=0.25, fillcolor=white, color=black];
+                    AC [label="A&amp;C", height=0.7, color=white, fillcolor=white];
+                    DSGA [label="DSGA", height=0.25, color=white, fillcolor=white];
+
+            	ba3_sem1_ratio [height=0.25, style=striped, color=black, fillcolor="forestgreen;0.3:orange", label="9        21"]
+
+                ba3_sem [height=0, fixedsize=true, label="", color=black];
+                    COMP [label="COMP", height=0.7, color=white, fillcolor=white];
+                    LBS [label="LBS", height=0.25, color=white, fillcolor=white];
+                    BAE [label="BAE", height=1.6, color=white, fillcolor=white];
+                    KZVK2 [label="KZVK2", style="filled, dashed" height=0.25, fillcolor=white, color=black];
+                    WP [label="WP", height=0.7, color=white, fillcolor=white];
+
+            	ba3_sem2_ratio [height=0.25, style=striped, color=black, fillcolor="forestgreen;0.6:orange", label="18       12"]
+
+	}
+
+            subgraph cluster_KZVK1{
+                label = "KZVK1"
+                style=filled;
+                color=lightgrey;
+                edge	[constraint=true, style=invis];
+
+                        ECON [label="ECON", height=0.25, color=white, fillcolor=white];
+                        KZVK1 -> ECON;
+                        CT [label="CT", height=0.25, color=white, fillcolor=white];
+                        KZVK1 -> CT;
+                        CB [label="CB", height=0.25, color=white, fillcolor=white];
+                        KZVK1 -> CB;
+            }
+            subgraph cluster_KZVK2{
+                label = "KZVK2"
+                style=filled;
+                color=lightgrey;
+                edge	[constraint=true, style=invis];
+
+                        INDP [label="INDP", height=0.7, color=white, fillcolor=white];
+                        KZVK2 -> INDP;
+                        TL [label="TL", height=0.25, color=white, fillcolor=white];
+                        KZVK2 -> TL;
+                        LCN [label="LCN", height=0.25, color=white, fillcolor=white];
+                        KZVK2 -> LCN;
+            }
+
+
+	# align clusters by adding invis edge between top items.
+	{
+		edge	[constraint=true, style=invis];
+            IP:ne -> GP:nw;
+            GP:ne -> SE:nw;
+	}
+
+        # =====================
+        # =	dependencies Ba 1	=
+        # =====================
+            # IP
+            # DW
+            # CSA
+            # GAS
+            # T&A
+            # PSE
+            # CALC
+            # CG
+        # =====================
+        # =	dependencies Ba 2	=
+        # =====================
+            # GP
+                    IP:e -> GP:w [color=black, penwidth=1];
+                    CSA:e -> GP:w [color=black, penwidth=1];
+            # M&B
+                    TA:e -> MB:w [color=black, penwidth=1];
+                    IP:e -> MB:w [color=black, penwidth=1];
+            # IDBS
+                    GAS:e -> IDBS:w [color=black, penwidth=1];
+            # LA
+                    DW:e -> LA:w [color=black, penwidth=1];
+            # AI
+                    GAS:e -> AI:w [color=black, penwidth=1];
+            # PPD
+                    IDBS:e -> PPD:e [color=black, style="dashed", penwidth=1];
+            # CN
+                    DW:e -> CN:w [color=black, penwidth=1];
+                    CSA:e -> CN:w [color=black, penwidth=1];
+                    CALC:e -> CN:w [color=black, penwidth=1];
+            # FYS
+            # NA
+            # ES
+            # US
+                    CSA:e -> US:w [color=black, penwidth=1];
+        # =====================
+        # =	dependencies Ba 3	=
+        # =====================
+            # SE
+                    PSE:e -> SE:w [color=black, penwidth=1];
+            # TCS
+                    GP:e -> TCS:w [color=black, penwidth=1];
+                    CN:e -> TCS:w [color=black, penwidth=1];
+            # DS
+                    US:e -> DS:w [color=black, penwidth=1];
+                    IDBS:e -> DS:w [color=black, penwidth=1];
+            # KZVK1
+            # ECON
+            # CT
+                    LA:e -> CT:w [color=black, style="dashed", penwidth=1];
+            # A&C
+                    DW:e -> AC:w [color=black, penwidth=1];
+                    MB:e -> AC:w [color=black, penwidth=1];
+            # DSGA
+                    AC:e -> DSGA:e [color=black, style="dashed", penwidth=1];
+                    GAS:e -> DSGA:w [color=black, penwidth=1];
+            # CB
+                    IP:e -> CB:w [color=black, penwidth=1];
+                    DW:e -> CB:w [color=black, penwidth=1];
+            # COMP
+                    GP:e -> COMP:w [color=black, penwidth=1];
+                    MB:e -> COMP:w [color=black, penwidth=1];
+            # LBS
+            # BAE
+                    GP:e -> BAE:w [color=black, style="dashed", penwidth=1];
+                    PPD:e -> BAE:w [color=black, style="dashed", penwidth=1];
+                    SE:e -> BAE:e [color=black, style="dashed", penwidth=1];
+                    TCS:e -> BAE:e [color=black, style="dashed", penwidth=1];
+                    DS:e -> BAE:e [color=black, style="dashed", penwidth=1];
+                    AI:e -> BAE:w [color=black, style="dashed", penwidth=1];
+                    COMP:e -> BAE:e [color=black, style="dashed", penwidth=1];
+            # KZVK2
+            # INDP
+            # TL
+                    MB:e -> TL:w [color=black, penwidth=1];
+            # LCN
+                    CN:e -> LCN:w [color=black, penwidth=1];
+            # WP
+                    CALC:e -> WP:w [color=black, penwidth=1];
+                    LA:e -> WP:w [color=black, penwidth=1];
+                    NA:e -> WP:w [color=black, penwidth=1];
+                    IP:e -> WP:w [color=black, penwidth=1];
+
+
+}

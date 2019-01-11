@@ -1,3 +1,5 @@
+# Doorgegeven 23/12/2018
+
 - Academic literacies terug verplicht en onderzoeksproject 1 reduceren tot 15SP.
 	- Meer representatief voor werklast.
 	- 3SP moeilijk te vullen door gelimiteerd aanbod van andere keuzevakken van 3SP.
@@ -5,11 +7,16 @@
 - Hernoeming onderzoeksstage -> onderzoeksproject.
 	- Duidelijker.
 	- Verwarring voorkomen met typisch beeld van stage. 
+
+- Studieprogramma bachelor herverdelen.
+- Promotor uit afstudeerrichting?
+	- p.4 richtlijnen: "Als promotorkunnen optreden: alle professoren verbonden aan de afstudeerrichting van de student. De lijst van professoren vindt men in de beschrijving van het curriculum."
+
+
+# Pending
+
 - Criteria stage/thesis duidelijker toelichten.
 	- Waarom welke criteria in welke bucket?
 	- VB: Wat houdt "nieuwe bijdrage", "publiceerbaar" in?
 	(Publiceerbaar sterk afhankelijk van onderwerp en type onderzoek.)
 	=> Paragraaf uitleg per criteria?
-- Studieprogramma bachelor herverdelen.
-
-

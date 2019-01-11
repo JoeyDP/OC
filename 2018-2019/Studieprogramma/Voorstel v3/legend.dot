@@ -1,0 +1,85 @@
+digraph {
+  rankdir=LR
+  node [shape=plaintext]
+
+  subgraph cluster_courses {
+    label = "Cursussen";
+    courses [label=<<table border="0" cellpadding="5" cellspacing="0" cellborder="0">
+      <tr><td align="left" port="i1">IP</td><td align="left">Inleiding Programmeren</td></tr>
+      <tr><td align="left" port="i1">DW</td><td align="left">Discrete Wiskunde</td></tr>
+      <tr><td align="left" port="i1">CSA</td><td align="left">Computersystemen en -architectuur</td></tr>
+      <tr><td align="left" port="i1">GAS</td><td align="left">Gegevensabstractie en -structuren</td></tr>
+      <tr><td align="left" port="i1">T&amp;A</td><td align="left">Talen en Automaten</td></tr>
+      <tr><td align="left" port="i1">PSE</td><td align="left">Project Software Engineering</td></tr>
+      <tr><td align="left" port="i1">CALC</td><td align="left">Calculus</td></tr>
+      <tr><td align="left" port="i1">CG</td><td align="left">Computer Graphics</td></tr>
+      <tr><td align="left" port="i1">GP</td><td align="left">Gevorderd Programmeren</td></tr>
+      <tr><td align="left" port="i1">M&amp;B</td><td align="left">Machines en Berekenbaarheid</td></tr>
+      <tr><td align="left" port="i1">US</td><td align="left">Uitbatingssystemen</td></tr>
+      <tr><td align="left" port="i1">IDBS</td><td align="left">Introduction to Databases</td></tr>
+      <tr><td align="left" port="i1">LA</td><td align="left">Lineaire Algebra</td></tr>
+      <tr><td align="left" port="i1">A&amp;C</td><td align="left">Algoritmen en Complexiteit</td></tr>
+      <tr><td align="left" port="i1">PPD</td><td align="left">Programming Project Databases</td></tr>
+      <tr><td align="left" port="i1">CN</td><td align="left">Computernetwerken</td></tr>
+      <tr><td align="left" port="i1">NA</td><td align="left">Numerieke Analyse</td></tr>
+      <tr><td align="left" port="i1">ES</td><td align="left">Elementaire Statistiek</td></tr>
+      <tr><td align="left" port="i1">COMP</td><td align="left">Compilers</td></tr>
+      <tr><td align="left" port="i1">SE</td><td align="left">Software Engineering</td></tr>
+      <tr><td align="left" port="i1">TCS</td><td align="left">Telecommunicatiesystemen</td></tr>
+      <tr><td align="left" port="i1">DS</td><td align="left">Gedistribueerde Systemen</td></tr>
+      <tr><td align="left" port="i1">AI</td><td align="left">Aritifical Intelligence</td></tr>
+      <tr><td align="left" port="i1">KZVK1</td><td align="left">Keuzevakken 1</td></tr>
+      <tr><td align="left" port="i1">ECON</td><td align="left">Economie</td></tr>
+      <tr><td align="left" port="i1">CT</td><td align="left">Codetheorie</td></tr>
+      <tr><td align="left" port="i1">DSGA</td><td align="left">Datastructuren en Graafalgoritmen</td></tr>
+      <tr><td align="left" port="i1">LBS</td><td align="left">Levensbeschouwing</td></tr>
+      <tr><td align="left" port="i1">BAE</td><td align="left">Bachelor Eindwerk</td></tr>
+      <tr><td align="left" port="i1">KZVK2</td><td align="left">Keuzevakken 2</td></tr>
+      <tr><td align="left" port="i1">CB</td><td align="left">Inleiding tot Computationele Biologie</td></tr>
+      <tr><td align="left" port="i1">INDP</td><td align="left">Individueel Project</td></tr>
+      <tr><td align="left" port="i1">TL</td><td align="left">Toegepaste Logica</td></tr>
+      <tr><td align="left" port="i1">LCN</td><td align="left">Labo Computernetwerken</td></tr>
+      <tr><td align="left" port="i1">FYS</td><td align="left">Fysica</td></tr>
+      <tr><td align="left" port="i1">WP</td><td align="left">Wetenschappelijk Programmeren</td></tr>
+      </table>>]
+    key3 [label=<<table border="0" cellpadding="2" cellspacing="0" cellborder="0">
+      <tr><td port="i1">&nbsp;</td></tr>
+      <tr><td port="i2">&nbsp;</td></tr>
+      <tr><td port="i3">&nbsp;</td></tr>
+      <tr><td port="i4">&nbsp;</td></tr>
+      <tr><td port="i5">&nbsp;</td></tr>
+      </table>>]
+
+    # fix placement a bit
+    courses:i1:e -> key3:i1:w [style=invis]
+  }
+
+  subgraph cluster_legend {
+    label = "Legende";
+    key [label=<<table border="0" cellpadding="2" cellspacing="0" cellborder="0">
+      <tr><td align="right" port="i1">Credit of MIN 8/20</td></tr>
+      <tr><td align="right" port="i2">Credit of ingeschreven</td></tr>
+      <tr><td align="right" port="i3">Toegevoegd</td></tr>
+      <tr><td align="right" port="i4">Verwijderd</td></tr>
+      <tr><td align="right" port="i5">Gewijzigd</td></tr>
+      <tr><td align="right" port="i6">Hoogte Vak = Aantal SP</td></tr>
+      <tr><td align="right" port="i7">SP Praktijk/Theorie</td></tr>
+      </table>>]
+    key2 [label=<<table border="0" cellpadding="2" cellspacing="0" cellborder="0">
+      <tr><td port="i1">&nbsp;</td></tr>
+      <tr><td port="i2">&nbsp;</td></tr>
+      <tr><td port="i3">&nbsp;</td></tr>
+      <tr><td port="i4">&nbsp;</td></tr>
+      <tr><td port="i5">&nbsp;</td></tr>
+      </table>>]
+    key:i1:e -> key2:i1:w []
+    key:i2:e -> key2:i2:w [style=dashed]
+    key:i3:e -> key2:i3:w [color=green]
+    key:i4:e -> key2:i4:w [color=red]
+    key:i5:e -> key2:i5:w [color=blue]
+
+    sp_ratio [shape=rect, fontsize=10, height=0.10, style=striped, color="forestgreen;0.33:orange", label="10             20"]
+    key:i7 -> sp_ratio [style=invis]
+  }
+
+}
