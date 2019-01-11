@@ -67,7 +67,7 @@ class Course(object):
         return d
 
     def addNewDependency(self, course, soft=False):
-        change = "Nieuwe dependency toegevoegd van {} naar {}.".format(course.shortName, self._shortName)
+        change = "Nieuwe dependency toegevoegd van {} naar {}.".format(course.shortName, self.shortName)
         self.logChange(change)
         course.logChange(change)
         return self.addDependency(course, soft=soft, new=True)
@@ -89,7 +89,7 @@ class Course(object):
     def moveTo(self, semester):
         if semester == self.semester:
             raise RuntimeError("Tried to move course to same semester")
-        self.logChange("Vak {} van {} naar {} verplaatst.".format(self._shortName, self.semester, semester))
+        self.logChange("Vak {} van {} naar {} verplaatst.".format(self.shortName, self.semester, semester))
         self.semester.removeCourse(self)
         self.semester = semester
         self.semester.addCourse(self)
@@ -101,10 +101,10 @@ class Course(object):
 
         if self.sp < sp:
             self.status = Status.New            # green for added SP
-            self.logChange("Aantal studiepunten van {} verhoogd van {} naar {}.".format(self._shortName, self.sp, sp))
+            self.logChange("Aantal studiepunten van {} verhoogd van {} naar {}.".format(self.shortName, self.sp, sp))
         else:
             self.status = Status.Reduced        # green for removed SP
-            self.logChange("Aantal studiepunten van {} verminderd van {} naar {}.".format(self._shortName, self.sp, sp))
+            self.logChange("Aantal studiepunten van {} verminderd van {} naar {}.".format(self.shortName, self.sp, sp))
         self.sp = sp
 
     def remove(self):

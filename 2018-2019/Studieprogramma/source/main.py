@@ -237,7 +237,7 @@ def doSolutionDep():
     SE.getDependency(IDBS).remove()
     SE.getDependency(PPD).remove()
     SE.getDependency(GAS).remove()
-    SE.getDependency(TA).remove()
+    # SE.getDependency(TA).remove()             # Feedback Serge
     SE.addNewDependency(PSE)
 
     # DS
@@ -260,11 +260,11 @@ def doSolutionDep():
     AC.getDependency(TA).remove()
 
     # COMP
-    COMP.addNewDependency(GP, soft=True)
+    # COMP.addNewDependency(GP, soft=True)
     COMP.addNewDependency(MB, soft=True)
-    COMP.getDependency(CSA).remove()
+    # COMP.getDependency(CSA).remove()
     # COMP.getDependency(TA).remove()
-    COMP.getDependency(GAS).remove()
+    # COMP.getDependency(GAS).remove()          # Feedback Serge
 
     # CB
     CB.getDependency(LA).remove()

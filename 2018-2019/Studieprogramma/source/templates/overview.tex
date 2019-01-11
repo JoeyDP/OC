@@ -53,17 +53,16 @@
 
     \begin{multicols*}{2}
         De volgende kleine wijzigingen worden voorgesteld.
-        \begin{description}
-        {% for course, changes in changesMap.items() %}
-            \pagebreak[3]
-            \item[{{ course.name | replace('&','\&') }}] \hfill
-            \begin{itemize}
-            {% for change in changes %}
-                    \item {{ change | replace('&','\&') }}
+            \begin{description}
+            {% for course, changes in changesMap.items() %}
+                \item[{{ course.name | replace('&','\&') }}] \hfill
+                \begin{itemize}
+                {% for change in changes %}
+                        \item {{ change | replace('&','\&') }}
+                {% endfor %}
+                \end{itemize}
             {% endfor %}
-            \end{itemize}
-        {% endfor %}
-        \end{description}
+            \end{description}
     \end{multicols*}
 
     \restoregeometry
@@ -96,29 +95,29 @@
         \item[DS van Ba 3 semester 1 naar Ba 2 semester 1 verplaatst.]
             Jaarwijziging, maar geen semesterwijziging. 2de bachelor studenten kunnen hun oorspronkelijke studieprogramma volgen en DS opnemen in hun derde jaar. 1ste bachelor studenten nemen DS op in hun 2de jaar. Dit heeft als effect dat er 1 overgangsjaar is met meer studenten.
 
-        \item[\parbox{\linewidth}{FYS van Ba 2 semester 2 naar Keuzevakken Ba 3 semester 2 \\ Aantal studiepunten van keuzevakken verhoogd van 6 naar 9. \\ Aantal studiepunten van DSGA verhoogd van 3 naar 6}]
-            Fysica wordt een keuzevak van 6 studiepunten. Het aantal studiepunten voor keuzevakken werd opgetrokken van 6 tot 9 in totaal. De overige 3 studiepunten gaan naar DSGA.
+        \item[\parbox{\linewidth}{FYS van Ba 2 semester 2 naar Keuzevakken Ba 3 semester 2 \\ COMP van Ba 3 semester 2 naar Ba 2 semester 2 \\ Aantal studiepunten van keuzevakken verhoogd van 6 naar 9. \\ Aantal studiepunten van DSGA verhoogd van 3 naar 6}]
+            Fysica wordt een keuzevak van 6 studiepunten. Het aantal studiepunten voor keuzevakken werd opgetrokken van 6 tot 9 in totaal. De overige 3 studiepunten gaan naar Datastructuren en Graafalgoritmen. Compilers gaat naar Ba 2 om de plaats van Fysica te vullen.
 
 
 
     \end{description}
 
 {#
-    15 verwijderd
-    11 toegevoegd
+    12 verwijderd
+    10 toegevoegd
     2 verzwakt
     4 verplaatst
     1 KZVK gemaakt
     1 SP verhoogd
 #}
 
-    Naast deze 6 grote wijzigingen werden er in totaal 15 dependencies verwijderd, 11 toegevoegd en 2 verzwakt. Dit zijn slechts 4 dependencies minder. De volgende punten werden behouden/verbeterd ten opzichte van de huidige situatie:
+    Naast deze grote wijzigingen werden er in totaal 12 dependencies verwijderd, 10 toegevoegd en 2 verzwakt. Dit zijn slechts 4 dependencies minder. De volgende punten werden behouden/verbeterd ten opzichte van de huidige situatie:
     \begin{itemize}
         \item Voldoende moeilijke vakken vooraan in studieprogramma om toe te staan dat studenten vroeg ontdekken dat de studie te moeilijk is voor hun.
         \item Voldoende speling voor de studenten om de bacheloropleiding te kunnen spreiden (een jaar met minder dan 36 studiepunten is onder gevuld, maar 150SP van de bachelor moeten behaald zijn om te mogen combineren met de master).
         \item Betere balans tussen de semesters.
         \item Betere balans in werklast over de jaren en semesters.
-        \item Voldoende volgtijdelijkheden om te voorkomen dat studenten moeilijke vakken kunnen “laten liggen” tot het einde van hun opleiding. (Dit mitigeert grotendeels de potentieel negatieve gevolgen van de nieuwe regel dat vakken niet meer verplicht opnieuw moeten opgenomen worden.)
+        \item Voldoende volgtijdelijkheden om te voorkomen dat studenten moeilijke vakken kunnen ``laten liggen'' tot het einde van hun opleiding. (Dit mitigeert grotendeels de potentieel negatieve gevolgen van de nieuwe regel dat vakken niet meer verplicht opnieuw moeten opgenomen worden.)
     \end{itemize}
 
     \section{Simulatie}

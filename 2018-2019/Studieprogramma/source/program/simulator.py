@@ -30,14 +30,16 @@ class Simulator(object):
         scenarios = itertools.combinations_with_replacement(requiredCourses, nrFailures)
 
         badSet = list()
+        yearsDistribution = list()
         for scenario in scenarios:
             toFailset = list(scenario)
             credits = CourseSet()
             electives = CourseSet()
-            yearNr = 1
+            yearNr = 0
             spDistribution = list()
             creditsDistribution = list()
             while credits.spTotalAll < 180:
+                yearNr += 1
                 # print("Year {}".format(str(yearNr)))
                 # print("Done", credits)
                 # print("Credits", credits.spTotalAll)
@@ -81,7 +83,9 @@ class Simulator(object):
                 for course in myCourses:
                     credits.addCourse(course)
 
-                yearNr += 1
+            yearsDistribution.append(yearNr)
+            # if yearNr > 4:
+            #     print("Required more than 4 years:", scenario)
 
             # print(spDistribution)
             # print(creditsDistribution)
@@ -96,3 +100,5 @@ class Simulator(object):
         print("Bottlenecks:")
         for scenario in badSet:
             print(scenario)
+
+        print("Average nr of years:", sum(yearsDistribution)/len(yearsDistribution))
