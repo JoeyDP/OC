@@ -44,15 +44,15 @@
 
         Voor elk vak waar een wijziging in gebeurd is, werd een overzicht gegenereerd met eerst de huidige situatie, vervolgens de wijzigingen relatief en absoluut (met en zonder kleurcode) en ten slotte een legende. De visualisatie geeft de drie bachelorjaren weer met de vakken per semester opgedeeld. Meer details kan u terugvinden in de legende. (Zie Appendix~\ref{sec:appenix}.)
 
-        In sectie~\ref{sec:kleine_wijzigingen} worden de kleine wijzigingen opgelijst. Sectie~\ref{sec:grote_wijzigingen} geeft de grote wijzigingen met bijhorende verklaringen. Ten slotte wordt in sectie~\ref{sec:simulatie} een simulatie toegelicht.
+        In sectie~\ref{sec:wijzigingen} worden de wijzigingen opgelijst. Sectie~\ref{sec:motivatie} geeft de bijhorende verklaringen. Ten slotte wordt in sectie~\ref{sec:simulatie} een simulatie toegelicht.
 
     \newpage
     \newgeometry{left=2cm,right=2cm}
-    \section{Kleine Wijzigingen}
-    \label{sec:kleine_wijzigingen}
+    \section{Wijzigingen}
+    \label{sec:wijzigingen}
 
     \begin{multicols*}{2}
-        De volgende kleine wijzigingen worden voorgesteld.
+        De volgende wijzigingen worden voorgesteld.
             \begin{description}
             {% for course, changes in changesMap.items() %}
                 \item[{{ course.name | replace('&','\&') }}] \hfill
@@ -67,51 +67,14 @@
 
     \restoregeometry
 
+
     \newpage
-    \section{Grote Wijzigingen}
-    \label{sec:grote_wijzigingen}
+    \section{Motivatie}
+    \label{sec:motivatie}
 
-{#
-    Aantal studiepunten van DSGA verhoogd van 3 naar 6.
+    \textcolor{red}{Deze sectie moet nog meer in detail uitgeschreven worden.}
 
-    Vak FYS van Ba 2 semester 2 naar Keuzevakken 2 verplaatst.
-    Aantal studiepunten van KZVK2 verhoogd van 3 naar 6.
-
-    Vak DS van Ba 3 semester 1 naar Ba 2 semester 1 verplaatst.
-    Vak A&C van Ba 2 semester 2 naar Ba 3 semester 1 verplaatst.
-    Vak US van Ba 2 semester 1 naar Ba 2 semester 2 verplaatst.
-
-    Vak COMP van Ba 3 semester 2 naar Ba 2 semester 2 verplaatst.
-#}
-
-    Het voorstel bevat ook enkele grotere algemene wijzigingen. De impact van deze wijzigingen is echter minimaal en wordt in detail besproken:
-    \begin{description}[style=nextline]
-        \item[US van Ba 2 semester 1 naar Ba 2 semester 2 verplaatst.]
-            Dit betreft een semesterwijziging binnen hetzelfde jaar. Er moet geen overgangsmaatregel zijn.
-
-        \item[A\&C van Ba 2 semester 2 naar Ba 3 semester 1 verplaatst.]
-            Jaar- EN semesterwijziging. Als het vak naar voor werd geplaatst, zou het twee keer gegeven moeten worden. In dit geval wordt het vak gelukkig naar Ba3 gepusht waardoor er 1 overgangsjaar is met minder/geen studenten.
-
-        \item[DS van Ba 3 semester 1 naar Ba 2 semester 1 verplaatst.]
-            Jaarwijziging, maar geen semesterwijziging. 2de bachelor studenten kunnen hun oorspronkelijke studieprogramma volgen en DS opnemen in hun derde jaar. 1ste bachelor studenten nemen DS op in hun 2de jaar. Dit heeft als effect dat er 1 overgangsjaar is met meer studenten.
-
-        \item[\parbox{\linewidth}{FYS van Ba 2 semester 2 naar Keuzevakken Ba 3 semester 2 \\ COMP van Ba 3 semester 2 naar Ba 2 semester 2 \\ Aantal studiepunten van keuzevakken verhoogd van 6 naar 9. \\ Aantal studiepunten van DSGA verhoogd van 3 naar 6}]
-            Fysica wordt een keuzevak van 6 studiepunten. Het aantal studiepunten voor keuzevakken werd opgetrokken van 6 tot 9 in totaal. De overige 3 studiepunten gaan naar Datastructuren en Graafalgoritmen. Compilers gaat naar Ba 2 om de plaats van Fysica te vullen.
-
-
-
-    \end{description}
-
-{#
-    12 verwijderd
-    10 toegevoegd
-    2 verzwakt
-    4 verplaatst
-    1 KZVK gemaakt
-    1 SP verhoogd
-#}
-
-    Naast deze grote wijzigingen werden er in totaal 12 dependencies verwijderd, 10 toegevoegd en 2 verzwakt. Dit zijn slechts 4 dependencies minder. De volgende punten werden behouden/verbeterd ten opzichte van de huidige situatie:
+    De volgende punten werden behouden/verbeterd ten opzichte van de huidige situatie:
     \begin{itemize}
         \item Voldoende moeilijke vakken vooraan in studieprogramma om toe te staan dat studenten vroeg ontdekken dat de studie te moeilijk is voor hun.
         \item Voldoende speling voor de studenten om de bacheloropleiding te kunnen spreiden (een jaar met minder dan 36 studiepunten is onder gevuld, maar 150SP van de bachelor moeten behaald zijn om te mogen combineren met de master).
