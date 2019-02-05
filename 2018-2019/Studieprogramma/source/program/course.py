@@ -192,10 +192,9 @@ LA = Course("Lineaire Algebra", "LA", 6, year2.semester1, LIEVEN_LE_BRUYN, spWor
 AC = Course("Algoritmen en Complexiteit", "A&C", 6, year2.semester2, FLORIS, spWork=0)
 PPD = Course("Programming Project Databases", "PPD", 6, year2.semester2, BART, spWork=6)
 CN = Course("Computernetwerken", "CN", 6, year2.semester2, CHRIS_B, spWork=0)
-FYS = Course("Fysica", "FYS", 6, year2.semester2, JOKE_H, spWork=0)
 NA = Course("Numerieke Analyse", "NA", 3, year2.semester2, KAREL_INT_HOUT, spWork=0)
 ES = Course("Elementaire Statistiek", "ES", 3, year2.semester2, NNB, spWork=1)
-
+COMP = Course("Compilers", "COMP", 6, year2.semester2, GUILLERMO_ALBERTO_PEREZ, spWork=3)
 
 # Year3
 # Semester 1
@@ -209,10 +208,11 @@ ECON = Course("Economie", "ECON", 3, KZVK1, JAN_BOUCKAERT, spWork=0)
 CT = Course("Codetheorie", "CT", 3, KZVK1, STIJN_S, spWork=2)
 
 # Semester 2
-COMP = Course("Compilers", "COMP", 6, year3.semester2, GUILLERMO_ALBERTO_PEREZ, spWork=3)
 DSGA = Course("Datastructuren en Graafalgoritmen", "DSGA", 3, year3.semester2, BENNY, spWork=0)
 LBS = Course("Levensbeschouwing", "LBS", 3, year3.semester2, PATRICK_L, spWork=0)
+FYS = Course("Fysica", "FYS", 6, year3.semester2, JOKE_H, spWork=0)
 BAE = Course("Bachelor Eindwerk", "BAE", 12, year3.semester2, JAN_B, spWork=12)
+
 
 KZVK2 = ElectiveGroup("Keuzevakken 2", "KZVK2", 3, year3.semester2)
 CB = Course("Inleiding tot Computationele Biologie", "CB", 3, KZVK2, KRIS, spWork=2)

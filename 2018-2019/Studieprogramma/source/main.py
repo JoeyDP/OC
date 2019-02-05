@@ -277,19 +277,20 @@ def doSolutionDep():
 
 def doSolutionCourses():
     # move courses
-    # US.moveTo(year2.semester2)
+    US.moveTo(year2.semester2)
 
     # DS.moveTo(year2.semester1)                  # Studenten (Laurens)
+    AI.moveTo(year2.semester1)                  #
 
-    # AC.moveTo(year3.semester2)
+    AC.moveTo(year3.semester2)                  # instead of compilers?
+    COMP.moveTo(year3.semester2)
 
-    # DSGA.moveTo(year3.semester1)
+    DSGA.moveTo(year3.semester1)
 
-    # Voorstel Benny
-    COMP.moveTo(year2.semester2)
+
     FYS.moveTo(KZVK2)
-    # DSGA.setSp(6)
-    KZVK2.setSp(9)
+    DSGA.setSp(6)
+    KZVK2.setSp(6)
 
 
 @bacli.command
