@@ -216,7 +216,7 @@ BAE = Course("Bachelor Eindwerk", "BAE", 12, year3.semester2, JAN_B, spWork=12)
 
 KZVK2 = ElectiveGroup("Keuzevakken 2", "KZVK2", 3, year3.semester2)
 CB = Course("Inleiding tot Computationele Biologie", "CB", 3, KZVK2, KRIS, spWork=2)
-INDP = Course("Individueel Project", "INDP", 6, KZVK2, ELS, spWork=3)
+INDP = Course("Individueel Project", "INDP", 6, KZVK2, ELS, spWork=6)
 TL = Course("Toegepaste Logica", "TL", 3, KZVK2, ELS, spWork=3)
 LCN = Course("Labo Computernetwerken", "LCN", 3, KZVK2, CHRIS_B, spWork=3)
 

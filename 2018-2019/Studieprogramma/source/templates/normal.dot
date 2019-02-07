@@ -28,34 +28,35 @@ digraph Studieprogramma{
 
         {% for semester in year.semesters %}
             {% for course in semester.courses %}
-                {% if absolute %}
-                    {% set color = "white" %}
-                {%  elif course.changed %}
-                    {% set color = "cornflowerblue" %}
-                {%  elif course.new %}
-                    {% set color = "green" %}
-                {%  elif course.removed %}
-                    {% set color = "red" %}
-                {%  elif course.reduced %}
-                    {% set color = "red" %}
-                {% else %}
-                    {% set color = "white" %}
-                {% endif %}
+                {% set color = "white" %}
+{#                {% if absolute %}#}
+{#                    {% set color = "white" %}#}
+{#                {%  elif course.changed %}#}
+{#                    {% set color = "cornflowerblue" %}#}
+{#                {%  elif course.new %}#}
+{#                    {% set color = "green" %}#}
+{#                {%  elif course.removed %}#}
+{#                    {% set color = "red" %}#}
+{#                {%  elif course.reduced %}#}
+{#                    {% set color = "red" %}#}
+{#                {% else %}#}
+{#                    {% set color = "white" %}#}
+{#                {% endif %}#}
                 {% if course.removed and (absolute or highlightCourse and not highlightCourse == course) %}
                     # {{ course.id }} removed
                 {% elif course.isElectiveGroup %}
                     {{ course.id }} [label="{{ course.shortName }}", style="filled, dashed" height={{ course.height }}, fillcolor={{ color }}, color=black];
                 {% elif not course.isElective %}
                     {% if highlightCourse == course %}
-                        {{ course.id }} [label="{{ course.shortName }}", style="filled, bold" height={{ course.height }}, color=black, fillcolor={{ color }}];
+                        {{ course.id }} [label="{{ course.shortName }}", height={{ course.height }}, color={{ color }}, color=black, style="striped, bold", fillcolor="orchid3;{{ course.spWork/course.sp + 0.00001 }}:white"];
                     {% else %}
-                        {{ course.id }} [label="{{ course.shortName }}", height={{ course.height }}, color={{ color }}, fillcolor={{ color }}];
+                        {{ course.id }} [label="{{ course.shortName }}", height={{ course.height }}, color={{ color }}, style=striped, fillcolor="orchid3;{{ course.spWork/course.sp + 0.00001 }}:white", penwidth=0];
                     {% endif %}
                 {% endif %}
             {% endfor %}
 
 			{% if includeWorkload %}
-            	{{ year.id }}_{{ semester.id }}_ratio [height=0.25, style=striped, color=black, fillcolor="forestgreen;{{ semester.spWork/semester.spTotal }}:orange", label="{{ semester.spWork }}{%if semester.spWork<10%} {% endif %}{%if fullnames%}                       {%endif%}       {{ semester.spTheory }}"]
+            	{{ year.id }}_{{ semester.id }}_ratio [height=0.25, style=striped, color=black, fillcolor="orchid3;{{ semester.spWork/semester.spTotal }}:white", label="{{ semester.spWork }}{%if semester.spWork<10%} {% endif %}{%if fullnames%}                       {%endif%}       {{ semester.spTheory }}"]
 			{% endif %}
 
             {% if not loop.last %}
@@ -74,26 +75,27 @@ digraph Studieprogramma{
                 edge	[constraint=true, style=invis];
 
                 {% for course in electiveGroup.courses %}
-                    {% if absolute %}
-                        {% set color = "white" %}
-                    {%  elif course.changed %}
-                        {% set color = "cornflowerblue" %}
-                    {%  elif course.new %}
-                        {% set color = "green" %}
-                    {%  elif course.removed %}
-                        {% set color = "red" %}
-                    {%  elif course.reduced %}
-                        {% set color = "red" %}
-                    {% else %}
-                        {% set color = "white" %}
-                    {% endif %}
+                    {% set color = "white" %}
+{#                    {% if absolute %}#}
+{#                        {% set color = "white" %}#}
+{#                    {%  elif course.changed %}#}
+{#                        {% set color = "cornflowerblue" %}#}
+{#                    {%  elif course.new %}#}
+{#                        {% set color = "green" %}#}
+{#                    {%  elif course.removed %}#}
+{#                        {% set color = "red" %}#}
+{#                    {%  elif course.reduced %}#}
+{#                        {% set color = "red" %}#}
+{#                    {% else %}#}
+{#                        {% set color = "white" %}#}
+{#                    {% endif %}#}
                     {% if course.removed and (absolute or highlightCourse and not highlightCourse == course) %}
                         # {{ course.id }} removed
                     {% else %}
                         {% if highlightCourse == course %}
-                            {{ course.id }} [label="{{ course.shortName }}", style="filled, bold" height={{ course.height }}, color=black, fillcolor={{ color }}];
+                            {{ course.id }} [label="{{ course.shortName }}", height={{ course.height }}, color={{ color }}, color=black, style="striped, bold", fillcolor="orchid3;{{ course.spWork/course.sp + 0.00001 }}:white"];
                         {% else %}
-                            {{ course.id }} [label="{{ course.shortName }}", height={{ course.height }}, color={{ color }}, fillcolor={{ color }}];
+                            {{ course.id }} [label="{{ course.shortName }}", height={{ course.height }}, color={{ color }}, style=striped, fillcolor="orchid3;{{ course.spWork/course.sp + 0.00001 }}:white", penwidth=0];
                         {% endif %}
                         {{ electiveGroup.id }} -> {{ course.id }};
                     {% endif %}

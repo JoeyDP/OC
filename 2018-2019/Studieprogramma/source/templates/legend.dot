@@ -45,7 +45,7 @@ digraph {
     key:i4:e -> key2:i4:w [color=red]
     key:i5:e -> key2:i5:w [color=blue]
 
-    sp_ratio [shape=rect, fontsize=10, height=0.10, style=striped, color="forestgreen;0.33:orange", label="10             20"]
+    sp_ratio [shape=rect, fontsize=10, height=0.10, style=striped, color="orchid3;0.33:white", label="10             20"]
     key:i7 -> sp_ratio [style=invis]
   }
 

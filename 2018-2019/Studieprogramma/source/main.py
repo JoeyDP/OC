@@ -147,8 +147,8 @@ def changes(filter:str=None):
 def overview(all: bool = False, fullnames: bool = False):
     program.course.FULL_NAMES = fullnames
 
-    current(workload=True, fullnames=fullnames)
-    solution(workload=True, fullnames=fullnames)
+    current(fullnames=fullnames)
+    solution(fullnames=fullnames)
     legend()
 
     mandatory = list()
