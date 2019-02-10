@@ -241,10 +241,10 @@ def doSolutionDep():
     SE.addNewDependency(PSE)
 
     # DS
-    DS.getDependency(GP).remove()               # to move DS to year 2
+    DS.getDependency(GP).remove()
     # DS.addNewDependency(IDBS)                 # to move DS to year 2
-    DS.getDependency(US).remove()               # to move DS to year 2
-    DS.addNewDependency(CSA)
+    # DS.getDependency(US).remove()               # to move DS to year 2
+    # DS.addNewDependency(CSA)                    # to move DS to year 2
 
     # AI
     AI.getDependency(AC).remove()
@@ -255,13 +255,13 @@ def doSolutionDep():
     DSGA.addNewDependency(GAS)
 
     # AC
-    AC.addNewDependency(MB)
+    # AC.addNewDependency(MB)
     # AC.getDependency(GAS).remove()            # Floris & Studenten (Laurens)
     AC.getDependency(TA).remove()
 
     # COMP
     # COMP.addNewDependency(GP, soft=True)
-    COMP.addNewDependency(MB, soft=True)
+    # COMP.addNewDependency(MB, soft=True)
     # COMP.getDependency(CSA).remove()
     # COMP.getDependency(TA).remove()
     # COMP.getDependency(GAS).remove()          # Feedback Serge
@@ -276,21 +276,22 @@ def doSolutionDep():
 
 
 def doSolutionCourses():
+    pass
     # move courses
-    US.moveTo(year2.semester2)
+    # US.moveTo(year2.semester2)
 
     # DS.moveTo(year2.semester1)                  # Studenten (Laurens)
-    AI.moveTo(year2.semester1)                  #
+    # AI.moveTo(year2.semester1)                  #
 
-    AC.moveTo(year3.semester2)                  # instead of compilers?
-    COMP.moveTo(year3.semester2)
+    # AC.moveTo(year3.semester2)                  # instead of compilers?
+    # COMP.moveTo(year3.semester2)
 
-    DSGA.moveTo(year3.semester1)
+    # DSGA.moveTo(year3.semester1)
 
 
-    FYS.moveTo(KZVK2)
-    DSGA.setSp(6)
-    KZVK2.setSp(6)
+    # FYS.moveTo(KZVK2)
+    # DSGA.setSp(6)
+    # KZVK2.setSp(6)
 
 
 @bacli.command

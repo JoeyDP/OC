@@ -56,7 +56,7 @@ digraph Studieprogramma{
             {% endfor %}
 
 			{% if includeWorkload %}
-            	{{ year.id }}_{{ semester.id }}_ratio [height=0.25, style=striped, color=black, fillcolor="orchid3;{{ semester.spWork/semester.spTotal }}:white", label="{{ semester.spWork }}{%if semester.spWork<10%} {% endif %}{%if fullnames%}                       {%endif%}       {{ semester.spTheory }}"]
+            	{{ year.id }}_{{ semester.id }}_ratio [height=0.20, style=striped, color=black, fillcolor="orchid3;{{ semester.spWork/semester.spTotal }}:white", label="{{ semester.spWork }}{%if semester.spWork<10%} {% endif %}{%if fullnames%}                       {%endif%}       {{ semester.spTheory }}"]
 			{% endif %}
 
             {% if not loop.last %}
