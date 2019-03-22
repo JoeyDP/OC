@@ -8,9 +8,7 @@ import pydot
 from tqdm import tqdm
 
 import program.course
-from program.course import *
-from program.year import *
-from program.teacher import *
+from program.cs import *
 from program.simulator import Simulator
 
 
@@ -29,7 +27,7 @@ def getCourses():
     return [c for y in YEARS for c in y.courses]
 
 
-OUTPUT_DIR = "output/"
+OUTPUT_DIR = "output/cs/"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -241,7 +239,7 @@ def doSolutionDep():
     SE.addNewDependency(PSE)
 
     # DS
-    DS.getDependency(GP).remove()
+    # DS.getDependency(GP).remove()
     # DS.addNewDependency(IDBS)                 # to move DS to year 2
     # DS.getDependency(US).remove()               # to move DS to year 2
     # DS.addNewDependency(CSA)                    # to move DS to year 2

@@ -148,7 +148,7 @@ digraph Studieprogramma{
                 {% endif %}
                 {% if dep.isRemoved() and (absolute or highlightCourse and not (highlightCourse == dep.source or highlightCourse == dep.dest)) %}
                 {% else %}
-                    {{ dep.source.id }}:e -> {{ dep.dest.id }}:{{ side }} [color={{ color }}{% if dep.isSoft() %}, style="dashed"{% endif %}, penwidth={{ penwidth }}];
+                    {{ dep.source.id }}:e -> {{ dep.dest.id }}:{{ side }} [color={{ color }}{% if dep.isSoft() %}, style="dashed"{% endif %}{% if dep.together %}, arrowhead="none"{% endif %}, penwidth={{ penwidth }}];
                 {% endif %}
             {% endfor %}
         {% endfor %}
